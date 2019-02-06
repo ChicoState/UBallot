@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1096047891389",
+    "firebase_url": "https://uballot-e4e7c.firebaseio.com",
+    "project_id": "uballot-e4e7c",
+    "storage_bucket": "uballot-e4e7c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1096047891389:android:be9e9e9545bce871",
+        "android_client_info": {
+          "package_name": "com.company.uballot"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1096047891389-53kmmkmbbr2rgdp41a8do5sq7rh7n30r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBTNPbr2TeUq7e6WNjAOc7OeDXLeLC2VTM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
