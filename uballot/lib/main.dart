@@ -24,10 +24,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Welcome to Flutter',
+      title: 'UBallot',
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Welcome to Flutter'),
+          title: Text('Quiz Question'),
         ),
         body:
           Center(
@@ -37,6 +37,7 @@ class MyApp extends StatelessWidget {
                   child: Text('A'),
                   onPressed: (){
                     please.answer='A';
+
                     quiz.addData(please.toJson());
                   },
                 ),
@@ -44,14 +45,16 @@ class MyApp extends StatelessWidget {
                   child: Text('B'),
                   onPressed: (){
                     please.answer='B';
-                    quiz.addData(please.toJson());
+                    quiz.updateData('Answers_to_quiz', please.toJson());
+                  //  quiz.addData(please.toJson());
                   },
                 ),
                 RaisedButton(
                   child: Text('C'),
                   onPressed: (){
                     please.answer='C';
-                    quiz.addData(please.toJson());
+                    quiz.updateData('Answers_to_quiz', please.toJson());
+                  //  quiz.addData(please.toJson());
                   },
                 ),
                 RaisedButton(

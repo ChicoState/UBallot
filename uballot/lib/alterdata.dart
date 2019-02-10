@@ -10,8 +10,17 @@ class ChangeDatabase {
 
   Future<void> addData(object) async {
     //FIX check logged in
-    Firestore.instance.collection('something').add(object).catchError((e) {
+    Firestore.instance.collection('Answers_to_quiz').add(object).catchError((e) {
       print(e);
+    });
+  }
+
+  updateData(docToChange,newValues){
+    Firestore.instance.collection('Answers_to_quiz')
+        .document('test')
+        .updateData(newValues)
+        .catchError((e){
+          print(e);
     });
   }
 }
