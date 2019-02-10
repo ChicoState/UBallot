@@ -3,16 +3,20 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'object.dart';
 import 'alterdata.dart';
+import 'login.dart';
 //import 'package:flutter/services.dart';
 //import 'dart:io';
 
 
 /*
+https://tphangout.com/flutter-firestore-crud-updating-deleting-data/
 https://flutter.io/docs/catalog/samples/expansion-tile-sample
 https://stackoverflow.com/questions/49869873/flutter-update-widgets-on-resume
  */
 
-void main() => runApp(MyApp());
+void main() => runApp(new MaterialApp(
+    home: LoginPage()),
+);
 
 class MyApp extends StatelessWidget {
 

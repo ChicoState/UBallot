@@ -15,12 +15,21 @@ class ChangeDatabase {
     });
   }
 
-  updateData(docToChange,newValues){
+  updateData(docToChange,object){
     Firestore.instance.collection('Answers_to_quiz')
         .document('test')
-        .updateData(newValues)
+        .updateData(object)
         .catchError((e){
           print(e);
     });
   }
+
+  getData(object) async{
+    return await Firestore.instance.collection('Answers_to_quiz').snapshots();
+  }
+
+  Future<bool> doesDataExist(object) async {
+
+  }
+
 }
