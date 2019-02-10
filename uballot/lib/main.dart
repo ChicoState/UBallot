@@ -35,19 +35,31 @@ class MyApp extends StatelessWidget {
               children: <Widget>[
                 RaisedButton(
                   child: Text('A'),
-                  onPressed: ()=> quiz.addData(please.toJson()),
+                  onPressed: (){
+                    please.answer='A';
+                    quiz.addData(please.toJson());
+                  },
                 ),
                 RaisedButton(
                   child: Text('B'),
-                  onPressed: null,
+                  onPressed: (){
+                    please.answer='B';
+                    quiz.addData(please.toJson());
+                  },
                 ),
                 RaisedButton(
                   child: Text('C'),
-                  onPressed: null,
+                  onPressed: (){
+                    please.answer='C';
+                    quiz.addData(please.toJson());
+                  },
                 ),
                 RaisedButton(
                   child: Text('D'),
-                  onPressed: null,
+                  onPressed: (){
+                    please.answer='D';
+                    quiz.addData(please.toJson());
+                  },
                 ),
               ],
             ),

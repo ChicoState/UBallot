@@ -2,8 +2,8 @@
 
 class Object{
 
-  String something='sample';
-  String answer='A';
+  String something='default';
+  String answer='default';
 
   toJson(){
     return {
