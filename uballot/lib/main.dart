@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'object.dart';
+import 'alterdata.dart';
+//import 'package:flutter/services.dart';
+//import 'dart:io';
+
+
 /*
 https://flutter.io/docs/catalog/samples/expansion-tile-sample
 https://stackoverflow.com/questions/49869873/flutter-update-widgets-on-resume
@@ -9,6 +15,12 @@ https://stackoverflow.com/questions/49869873/flutter-update-widgets-on-resume
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+
+  final FirebaseAuth _auth= FirebaseAuth.instance;
+  ChangeDatabase quiz=new ChangeDatabase();
+  Object please=new Object();
+
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -19,64 +31,33 @@ class MyApp extends StatelessWidget {
         ),
         body:
           Center(
-          child: ListView.builder(
-            itemBuilder: (BuildContext context,int index)=>
-                EntryItem(data[index]),
-            itemCount: data.length,
-          ),
+            child: ListView(
+              children: <Widget>[
+                RaisedButton(
+                  child: Text('A'),
+                  onPressed: ()=> quiz.addData(please.toJson()),
+                ),
+                RaisedButton(
+                  child: Text('B'),
+                  onPressed: null,
+                ),
+                RaisedButton(
+                  child: Text('C'),
+                  onPressed: null,
+                ),
+                RaisedButton(
+                  child: Text('D'),
+                  onPressed: null,
+                ),
+              ],
+            ),
         ),
       ),
     );
   }
 }
 
-class Entry {
-  Entry(this.title, [this.children=const <Entry>[]]);
-
-  final String title;
-  final List<Entry> children;
-
-}
-
-final List<Entry> data = <Entry>[
-  Entry(
-    'first',
-    <Entry>[
-      Entry('tester'),
-    ],
-  ),
-  Entry(
-    'second',
-    <Entry>[
-      Entry('please work'),
-    ],
-  ),
-];
-
-class EntryItem extends StatelessWidget{
-  const EntryItem(this.entry);
-
-  final Entry entry;
-
-  Widget _buildTiles(Entry root) {
-    if(root.children.isEmpty) {
-      return ListTile(title: Text(root.title));
-    }
-    return ExpansionTile(
-      key: PageStorageKey<Entry>(root),
-      title: Text(root.title),
-      children: root.children.map(_buildTiles).toList(),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    return _buildTiles(entry);
-  }
-}
-
-
+/*
 handleAppLifecycleState() {
   AppLifecycleState _lastLifecyleState;
   SystemChannels.lifecycle.setMessageHandler((msg) {
@@ -100,3 +81,5 @@ handleAppLifecycleState() {
     }
   });
 }
+
+*/
