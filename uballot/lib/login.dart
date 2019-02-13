@@ -6,7 +6,7 @@ import 'main.dart';
 /*
 https://medium.com/@anilcan/forms-in-flutter-6e1364eafdb5
 https://www.youtube.com/watch?v=13-jNF984C0
-
+https://stackoverflow.com/questions/50881467/example-of-firebase-auth-with-email-and-password-on-flutter
 */
 
 class _LoginData{
@@ -34,20 +34,30 @@ class _LoginPageState extends State<LoginPage>{
         FirebaseUser user =
         await FirebaseAuth.instance.signInWithEmailAndPassword(
             email: credentials.email, password: credentials.password);
+        //validateUser(credentials);
+        assert(user!=null);
+        assert(await user.getIdToken()!=null);
         Navigator.push(context, MaterialPageRoute(builder: (context)=> new MyApp()));
+
       } catch(e){
         print(e.message);
+      //  return;
+        //FIX EXIT HERE LATER!! OR FAIL LOGIN
       }
     }
   }
 
   Future<FirebaseUser> validateUser(_LoginData user) async{
     final FirebaseUser checkUser = await auth.signInWithEmailAndPassword(
-        email: null, password: null);
+        email: user.email, password: user.password);
     assert(checkUser!=null);
     assert(await checkUser.getIdToken()!=null);
     final FirebaseUser returnedUser = await auth.currentUser();
     assert(checkUser.uid == returnedUser.uid);
+
+    print('\n\n\n\n\n'+returnedUser.displayName+'\n\n\n\n\n\n\n\n\n\n\n');
+
+
     return returnedUser;
   }
 

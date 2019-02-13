@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'object.dart';
 import 'alterdata.dart';
 import 'login.dart';
@@ -15,7 +14,7 @@ https://stackoverflow.com/questions/49869873/flutter-update-widgets-on-resume
  */
 
 void main() => runApp(new MaterialApp(
-    home: LoginPage()),
+    home: new LoginPage()),
 );
 
 class MyApp extends StatelessWidget {
@@ -42,6 +41,18 @@ class MyApp extends StatelessWidget {
                   onPressed: (){
                     please.answer='A';
 
+                    var temp=FutureBuilder<FirebaseUser>(
+                      future: FirebaseAuth.instance.currentUser(),
+                        builder: (BuildContext context, AsyncSnapshot<FirebaseUser> snapshot){
+                        if(snapshot.connectionState==ConnectionState.done){
+                          return new Text(snapshot.data.uid);
+                        } else {
+                          return new Text('not yet loaded...');
+                        }
+                        }
+                    );
+                    please.username=temp.toString();
+                    print('\n\n\n\n\n'+temp.toString()+'\n\n\n\n\n\n\n\n\n\n\n');
                     quiz.addData(please.toJson());
                   },
                 ),
