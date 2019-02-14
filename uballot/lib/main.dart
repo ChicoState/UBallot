@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
 import 'object.dart';
 import 'alterdata.dart';
 import 'login.dart';
@@ -17,14 +18,23 @@ void main() => runApp(new MaterialApp(
     home: new LoginPage()),
 );
 
-class MyApp extends StatelessWidget {
-  final String user;
+class MyApp extends StatefulWidget{
+ // final String user=user;
 
-  MyApp({Key key, this.user}) : super (key:key);
+  @override
+
+  _MyApp createState() => _MyApp();
+}
+
+class _MyApp extends State<MyApp> {
+ // final String user;
+
+ // _MyApp({Key key, this.user}) : super (key:key);
 
   final FirebaseAuth _auth= FirebaseAuth.instance;
   ChangeDatabase quiz=new ChangeDatabase();
   Object please=new Object();
+  List<bool> bool_list= [false,false,false,false];
 
 
   @override
@@ -41,34 +51,49 @@ class MyApp extends StatelessWidget {
               children: <Widget>[
                 RaisedButton(
                   child: Text('A'),
+                  color: bool_list[0]?Colors.blue:Colors.green,
                   onPressed: (){
+                    setState(()=>bool_list=[true,false,false,false]);
                     please.answer='A';
-                    please.username=user;
+
+                  //  please.uid=user;
                     //FirebaseUser user= _auth.currentUser();
                     //please.username=temp.;
                     quiz.addData(please.toJson());
+
                   },
                 ),
+
                 RaisedButton(
                   child: Text('B'),
+                  color: bool_list[1]?Colors.blue:Colors.green,
                   onPressed: (){
+                    setState(()=>bool_list=[false,true,false,false]);
                     please.answer='B';
+                   // please.uid=user;
                     quiz.updateData('Answers_to_quiz', please.toJson());
                   //  quiz.addData(please.toJson());
                   },
                 ),
                 RaisedButton(
                   child: Text('C'),
+                  color: bool_list[2]?Colors.blue:Colors.green,
                   onPressed: (){
+                    setState(()=>bool_list=[false,false,true,false]);
+
                     please.answer='C';
+                    //please.uid=user;
                     quiz.updateData('Answers_to_quiz', please.toJson());
                   //  quiz.addData(please.toJson());
                   },
                 ),
                 RaisedButton(
                   child: Text('D'),
+                  color: bool_list[3]?Colors.blue:Colors.green,
                   onPressed: (){
+                    setState(()=>bool_list=[false,false,false,true]);
                     please.answer='D';
+                    //please.uid=user;
                     quiz.addData(please.toJson());
                   },
                 ),

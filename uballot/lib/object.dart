@@ -1,13 +1,13 @@
 
 
 class Object{
-  String username='default';
+  String uid='default';
   String something='default';
   String answer='default';
 
   toJson(){
     return {
-      "username":username,
+      "uid":uid,
       "something":something,
       "answer":answer,
     };
