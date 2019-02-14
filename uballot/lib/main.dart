@@ -55,9 +55,9 @@ class _MyApp extends State<MyApp> {
           backgroundColor: Colors.black,
         appBar: AppBar(
           centerTitle: true,
-          backgroundColor: Colors.yellow,
+          backgroundColor: Colors.black,
           title: Text('Quiz Question '+counter.toString(),
-            style: TextStyle(color: Colors.orange),),
+            style: TextStyle(color: Colors.white),),
         ),
         body:
           Align(
@@ -69,7 +69,9 @@ class _MyApp extends State<MyApp> {
 
                   children: <Widget>[
                     RaisedButton(
-                      child: Text('A'),
+                      child: Text('A',
+                        style: TextStyle(color: Colors.white),
+                      ),
                       color: bool_list[0]?Colors.blue:Colors.green,
                       onPressed: (){
                         setState(()=>bool_list=[true,false,false,false]);
@@ -80,7 +82,8 @@ class _MyApp extends State<MyApp> {
                     ),
 
                 RaisedButton(
-                  child: Text('B'),
+                  child: Text('B',
+                    style: TextStyle(color: Colors.white),),
                   color: bool_list[1]?Colors.blue:Colors.green,
                   onPressed: (){
                     setState(()=>bool_list=[false,true,false,false]);
@@ -91,7 +94,9 @@ class _MyApp extends State<MyApp> {
                   },
                 ),
                 RaisedButton(
-                  child: Text('C'),
+                  child: Text('C',
+                    style: TextStyle(color: Colors.white),
+                  ),
                   color: bool_list[2]?Colors.blue:Colors.green,
                   onPressed: (){
                     setState(()=>bool_list=[false,false,true,false]);
@@ -106,7 +111,9 @@ class _MyApp extends State<MyApp> {
                   },
                 ),
                 RaisedButton(
-                  child: Text('D'),
+                  child: Text('D',
+                    style: TextStyle(color: Colors.white),
+                  ),
                   color: bool_list[3]?Colors.blue:Colors.green,
                   onPressed: (){
                     setState(()=>bool_list=[false,false,false,true]);
@@ -115,7 +122,9 @@ class _MyApp extends State<MyApp> {
                   },
                 ),
                 RaisedButton(
-                  child: Text('Next Question'),
+                  child: Text('Next Question',
+                  style: TextStyle(color: Colors.white),),
+                  color: Colors.red,
                   onPressed: () {
                     counter+=1;
                     setState(() {
