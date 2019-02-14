@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+
 import 'object.dart';
 import 'alterdata.dart';
 import 'login.dart';
@@ -12,6 +13,7 @@ import 'login.dart';
 https://tphangout.com/flutter-firestore-crud-updating-deleting-data/
 https://flutter.io/docs/catalog/samples/expansion-tile-sample
 https://stackoverflow.com/questions/49869873/flutter-update-widgets-on-resume
+https://stackoverflow.com/questions/50863681/flutter-how-do-i-toggle-the-color-of-a-raisedbutton-upon-click
  */
 
 void main() => runApp(new MaterialApp(
@@ -19,7 +21,8 @@ void main() => runApp(new MaterialApp(
 );
 
 class MyApp extends StatefulWidget{
- // final String user=user;
+  final String user;
+   MyApp({Key key, this.user}) : super (key:key);
 
   @override
 
@@ -56,7 +59,7 @@ class _MyApp extends State<MyApp> {
                     setState(()=>bool_list=[true,false,false,false]);
                     please.answer='A';
 
-                  //  please.uid=user;
+                    please.uid="${widget.user}";
                     //FirebaseUser user= _auth.currentUser();
                     //please.username=temp.;
                     quiz.addData(please.toJson());
@@ -83,7 +86,10 @@ class _MyApp extends State<MyApp> {
 
                     please.answer='C';
                     //please.uid=user;
-                    quiz.updateData('Answers_to_quiz', please.toJson());
+
+
+                  quiz.do_something();
+                  //  quiz.updateData('Answers_to_quiz', please.toJson());
                   //  quiz.addData(please.toJson());
                   },
                 ),

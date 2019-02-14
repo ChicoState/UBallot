@@ -37,8 +37,8 @@ class _LoginPageState extends State<LoginPage>{
         //validateUser(credentials);
         assert(user!=null);
         assert(await user.getIdToken()!=null);
-        Navigator.push(context, MaterialPageRoute(builder: (context)=> new MyApp()));
-//        Navigator.push(context, MaterialPageRoute(builder: (context)=> new MyApp(user: user.uid)));
+     //   Navigator.push(context, MaterialPageRoute(builder: (context)=> new MyApp()));
+        Navigator.push(context, MaterialPageRoute(builder: (context)=> new MyApp(user: user.uid)));
 
       } catch(e){
         print(e.message);
@@ -55,9 +55,6 @@ class _LoginPageState extends State<LoginPage>{
     assert(await checkUser.getIdToken()!=null);
     final FirebaseUser returnedUser = await auth.currentUser();
     assert(checkUser.uid == returnedUser.uid);
-
-    print('\n\n\n\n\n'+returnedUser.displayName+'\n\n\n\n\n\n\n\n\n\n\n');
-
 
     return returnedUser;
   }

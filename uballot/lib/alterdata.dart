@@ -15,6 +15,14 @@ class ChangeDatabase {
 
   }
 
+  do_something(){
+    final Firestore store =Firestore.instance;
+    Firestore.instance.runTransaction((transaction) async {
+      store.collection('testtest').add({'flutter':'derp derp'});
+      //await transaction.set(Firestore.instance.collection("your_collection").document(), {
+      });
+    }
+
   updateData(docToChange,object){
     Firestore.instance.collection('Answers_to_quiz')
         .document('test')
