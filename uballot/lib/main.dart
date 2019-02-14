@@ -18,6 +18,9 @@ void main() => runApp(new MaterialApp(
 );
 
 class MyApp extends StatelessWidget {
+  final String user;
+
+  MyApp({Key key, this.user}) : super (key:key);
 
   final FirebaseAuth _auth= FirebaseAuth.instance;
   ChangeDatabase quiz=new ChangeDatabase();
@@ -40,19 +43,9 @@ class MyApp extends StatelessWidget {
                   child: Text('A'),
                   onPressed: (){
                     please.answer='A';
-
-                    var temp=FutureBuilder<FirebaseUser>(
-                      future: FirebaseAuth.instance.currentUser(),
-                        builder: (BuildContext context, AsyncSnapshot<FirebaseUser> snapshot){
-                        if(snapshot.connectionState==ConnectionState.done){
-                          return new Text(snapshot.data.uid);
-                        } else {
-                          return new Text('not yet loaded...');
-                        }
-                        }
-                    );
-                    please.username=temp.toString();
-                    print('\n\n\n\n\n'+temp.toString()+'\n\n\n\n\n\n\n\n\n\n\n');
+                    please.username=user;
+                    //FirebaseUser user= _auth.currentUser();
+                    //please.username=temp.;
                     quiz.addData(please.toJson());
                   },
                 ),

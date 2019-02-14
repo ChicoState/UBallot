@@ -37,7 +37,7 @@ class _LoginPageState extends State<LoginPage>{
         //validateUser(credentials);
         assert(user!=null);
         assert(await user.getIdToken()!=null);
-        Navigator.push(context, MaterialPageRoute(builder: (context)=> new MyApp()));
+        Navigator.push(context, MaterialPageRoute(builder: (context)=> new MyApp(user: user.email)));
 
       } catch(e){
         print(e.message);
