@@ -88,7 +88,7 @@ class _MyApp extends State<MyApp> {
                     //please.uid=user;
 
 
-                  quiz.do_something();
+                  quiz.do_something(please.uid,please.toJson());
                   //  quiz.updateData('Answers_to_quiz', please.toJson());
                   //  quiz.addData(please.toJson());
                   },

@@ -15,10 +15,12 @@ class ChangeDatabase {
 
   }
 
-  do_something(){
+  do_something(user,object){
     final Firestore store =Firestore.instance;
     Firestore.instance.runTransaction((transaction) async {
-      store.collection('testtest').add({'flutter':'derp derp'});
+      store.collection(user).add(object).catchError((e){
+        print(e);
+      });
       //await transaction.set(Firestore.instance.collection("your_collection").document(), {
       });
     }
