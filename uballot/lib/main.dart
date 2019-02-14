@@ -38,15 +38,22 @@ class _MyApp extends State<MyApp> {
   ChangeDatabase quiz=new ChangeDatabase();
   Object please=new Object();
   List<bool> bool_list= [false,false,false,false];
+  int counter=1;
 
 
   @override
   Widget build(BuildContext context) {
+    
     return MaterialApp(
       title: 'UBallot',
-      home: Scaffold(
+      //probably not needed
+      home: WillPopScope(
+        onWillPop: () async{
+          return true;
+        },
+        child: Scaffold(
         appBar: AppBar(
-          title: Text('Quiz Question'),
+          title: Text('Quiz Question '+counter.toString()),
         ),
         body:
           Center(
@@ -58,12 +65,8 @@ class _MyApp extends State<MyApp> {
                   onPressed: (){
                     setState(()=>bool_list=[true,false,false,false]);
                     please.answer='A';
-
-                    please.uid="${widget.user}";
                     //FirebaseUser user= _auth.currentUser();
                     //please.username=temp.;
-                    quiz.addData(please.toJson());
-
                   },
                 ),
 
@@ -74,7 +77,7 @@ class _MyApp extends State<MyApp> {
                     setState(()=>bool_list=[false,true,false,false]);
                     please.answer='B';
                    // please.uid=user;
-                    quiz.updateData('Answers_to_quiz', please.toJson());
+                  //  quiz.updateData('Answers_to_quiz', please.toJson());
                   //  quiz.addData(please.toJson());
                   },
                 ),
@@ -88,7 +91,7 @@ class _MyApp extends State<MyApp> {
                     //please.uid=user;
 
 
-                  quiz.do_something(please.uid,please.toJson());
+                  //quiz.do_something(please.uid,please.toJson());
                   //  quiz.updateData('Answers_to_quiz', please.toJson());
                   //  quiz.addData(please.toJson());
                   },
@@ -100,13 +103,28 @@ class _MyApp extends State<MyApp> {
                     setState(()=>bool_list=[false,false,false,true]);
                     please.answer='D';
                     //please.uid=user;
-                    quiz.addData(please.toJson());
                   },
+                ),
+                RaisedButton(
+                  child: Text('Next Question'),
+                  onPressed: () {
+                    counter+=1;
+                    setState(() {
+                      please.uid="${widget.user}";
+                      please.question_number=counter;
+                      quiz.do_something(please.uid,please.toJson());
+                      bool_list=[false,false,false,false];
+                      MyApp();
+                    });
+                    //Navigator.push(context,
+                      //  MaterialPageRoute(builder: (context) => new MyApp()));
+                  }
                 ),
               ],
             ),
         ),
       ),
+    ),
     );
   }
 }
