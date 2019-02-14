@@ -52,23 +52,32 @@ class _MyApp extends State<MyApp> {
           return true;
         },
         child: Scaffold(
+          backgroundColor: Colors.black,
         appBar: AppBar(
-          title: Text('Quiz Question '+counter.toString()),
+          centerTitle: true,
+          backgroundColor: Colors.yellow,
+          title: Text('Quiz Question '+counter.toString(),
+            style: TextStyle(color: Colors.orange),),
         ),
         body:
-          Center(
-            child: ListView(
-              children: <Widget>[
-                RaisedButton(
-                  child: Text('A'),
-                  color: bool_list[0]?Colors.blue:Colors.green,
-                  onPressed: (){
-                    setState(()=>bool_list=[true,false,false,false]);
-                    please.answer='A';
+          Align(
+            alignment: Alignment.center,
+            child:
+              Container(
+                height: MediaQuery.of(context).size.height/2,
+                child: ListView(
+
+                  children: <Widget>[
+                    RaisedButton(
+                      child: Text('A'),
+                      color: bool_list[0]?Colors.blue:Colors.green,
+                      onPressed: (){
+                        setState(()=>bool_list=[true,false,false,false]);
+                        please.answer='A';
                     //FirebaseUser user= _auth.currentUser();
                     //please.username=temp.;
-                  },
-                ),
+                      },
+                    ),
 
                 RaisedButton(
                   child: Text('B'),
@@ -125,6 +134,7 @@ class _MyApp extends State<MyApp> {
         ),
       ),
     ),
+      ),
     );
   }
 }
