@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:async';
+import 'home.dart';
 import 'main.dart';
 
 /*
@@ -38,7 +39,7 @@ class _LoginPageState extends State<LoginPage>{
         assert(user!=null);
         assert(await user.getIdToken()!=null);
      //   Navigator.push(context, MaterialPageRoute(builder: (context)=> new MyApp()));
-        Navigator.push(context, MaterialPageRoute(builder: (context)=> new MyApp(user: user.uid)));
+        Navigator.push(context, MaterialPageRoute(builder: (context)=> Home()));
 
       } catch(e){
         print(e.message);

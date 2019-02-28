@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'home.dart';
 
-
+import 'createquiz.dart';
 import 'object.dart';
 import 'alterdata.dart';
 import 'login.dart';
@@ -16,9 +17,32 @@ https://stackoverflow.com/questions/49869873/flutter-update-widgets-on-resume
 https://stackoverflow.com/questions/50863681/flutter-how-do-i-toggle-the-color-of-a-raisedbutton-upon-click
  */
 
-void main() => runApp(new MaterialApp(
-    home: new LoginPage()),
-);
+void main() {
+  runApp(UBallot());
+}
+
+class UBallot extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      routes: <String,WidgetBuilder>{
+        '/':(context)=> Home(),
+        '/login':(context)=>LoginPage(),
+        '/home':(context)=> Home(),
+        '/createquiz':(context)=>CreateQuiz(),
+      },
+    );
+  }
+}
+
+
+
+
+
+//void main() => runApp(new MaterialApp(
+//    home: new Home()),
+//);
 
 class MyApp extends StatefulWidget{
   final String user;
