@@ -15,6 +15,7 @@ class _test extends State<test> {
   FirebaseUser user;
   DocumentSnapshot ss;
   DocumentSnapshot wow;
+  DocumentSnapshot teach;
   void initState(){
     getFirebase();
     super.initState();
@@ -31,11 +32,11 @@ sad() async {
   Firestore.instance.collection('Classes').snapshots().listen((
       data) {
     data.documents.forEach((document) {
-      print(document.data['boolean'].path);
+    //  print(document.data['boolean'].path);
       var stuff= document.data['boolean'].path.split('/');
 
       setState(() {
-        print(stuff[1]);
+     //   print(stuff[1]);
       });
     });
   });
@@ -44,24 +45,42 @@ sad() async {
 
 
 
-getQuestions() async  {
-  DocumentSnapshot _ss = await Firestore.instance.collection('Classes').document('oops').get();
-  setState(() {
-    ss=_ss;
-  });
+  getQuestions() async  {
+    DocumentSnapshot _ss = await Firestore.instance.collection('Classes').document('oops').get();
+    setState(() {
+      ss=_ss;
+    });
+  }
+
+  getQuestionss() async  {
+    DocumentSnapshot _ss = await Firestore.instance.collection('Classes').document('oops').get();
+      //var path = _ss.data['boolean'].toString().split('/');
+      var path = _ss.data['boolean'].path.toString().split('/');
+if(_ss!=null) {
+  var temp = await Firestore.instance.collection(path[0]).document(path[1]).get();
+  print(temp);
+  if(temp!=null) {
+    setState(() {
+      teach = temp;
+    });
+  }
 }
+      //ss=_ss;
+  }
 
 
-@override
+  @override
   Widget build(BuildContext context) {
-  getQuestions();
+ // getQuestions();
+  getQuestionss();
   sad();
     return Scaffold(
       appBar: AppBar(title: Text('asdsa'),),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Text(ss.data.toString()),
+          Text(teach.data[0]),
+          //Text(ss.data['boolean'].toString()),
         ],
       ),
     );
