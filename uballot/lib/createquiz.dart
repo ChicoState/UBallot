@@ -87,6 +87,7 @@ class _CreateQuiz extends State<CreateQuiz> {
   int radioVal=-1;
   List<bool> filled= [false,false,false,false,false];
   TextEditingController QUESTION=TextEditingController();
+  TextEditingController ANSWER=TextEditingController();
   TextEditingController A= TextEditingController();
   TextEditingController B=TextEditingController();
   TextEditingController C= TextEditingController();
@@ -100,7 +101,6 @@ class _CreateQuiz extends State<CreateQuiz> {
   @override
   void initState(){
     questionNumber=1;
-
   }
 
   setAnswer(int value){
@@ -131,9 +131,10 @@ class _CreateQuiz extends State<CreateQuiz> {
 
       saveToFirebase(questionNumber);
       setState(() {
+        A.clear();B.clear();QUESTION.clear();C.clear();D.clear();E.clear();
+        radioVal=-1;
         questionNumber+=1;
-        //A.clear();
-
+        filled.fillRange(0, filled.length,false);
       });
     }
   }
@@ -172,17 +173,17 @@ class _CreateQuiz extends State<CreateQuiz> {
             TextFormField(decoration: InputDecoration(labelText: "C",fillColor: Colors.blue,filled: filled[2]),
               controller: C,
               onSaved: (val)=>quizQuestion.C=val,
-              validator: (val)=>val==''?val:null,
+             // validator: (val)=>val==''?val:null,
             ),
             TextFormField(decoration: InputDecoration(labelText: "D",fillColor: Colors.pink,filled: filled[3]),
               controller: D,
               onSaved: (val)=>quizQuestion.D=val,
-              validator: (val)=>val==''?val:null,
+              //validator: (val)=>val==''?val:null,
             ),
             TextFormField(decoration: InputDecoration(labelText: "E",fillColor: Colors.orange,filled: filled[4]),
               controller: E,
               onSaved: (val)=>quizQuestion.E=val,
-              validator: (val)=>val==''?val:null,
+              //validator: (val)=>val==''?val:null,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
