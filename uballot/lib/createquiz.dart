@@ -1,21 +1,107 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'Widgets/Question.dart';
 
+class NewQuizName extends StatefulWidget {
+  @override
+  _NewQuizName createState() => _NewQuizName();
+}
+
+
+
+class _NewQuizName extends State<NewQuizName> {
+  String quizName;
+  final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
+  var _TextEditingController= TextEditingController();
+
+  submitQuizName(){
+    final key = _formKey.currentState;
+    if(key.validate()){
+      key.save();
+      try{
+        print('here');
+        print('quiz name is '+quizName);
+      }catch(e){
+        print(e.toString() +' error occured');
+      }
+    } else {
+      print('not validated');
+    }
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      resizeToAvoidBottomPadding: false,
+      appBar: AppBar(title: Text('Name for quiz'),),
+      backgroundColor: Colors.black,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+        Form(
+          key: _formKey,
+          child: Column(
+          children:<Widget>[
+          Center(
+            child: Container(
+              color: Colors.cyan,
+              child: TextFormField(
+                controller: _TextEditingController,
+                validator: (val)=>val==''?val:null,
+                onSaved: (val)=>quizName=val,
+                style: TextStyle(color: Colors.white),
+            ),
+          ),
+          ),
+          RaisedButton(child: Text("Submit", style: TextStyle(color: Colors.white),),color: Colors.red,onPressed: (){
+            print('pressed button');
+            submitQuizName();
+            var route=MaterialPageRoute(builder: (BuildContext context) => CreateQuiz(titlequiz: _TextEditingController.text));
+            Navigator.of(context).push(route);
+           // Navigator.pushNamed(context,'/createquiz',);
+          }),
+          ],
+    ),
+    ),
+        ],
+      ),
+    );
+  }
+}
+
+
+
 class CreateQuiz extends StatefulWidget{
+  final String titlequiz;
+  CreateQuiz({Key key, this.titlequiz}) :super(key:key);
   @override
   _CreateQuiz createState()=> _CreateQuiz();
 }
 
 class _CreateQuiz extends State<CreateQuiz> {
+  String nameOfQuiz;
+
+  int questionNumber;
   final Question quizQuestion= new Question();
   int radioVal=-1;
   List<bool> filled= [false,false,false,false,false];
-  TextEditingController questionCont= TextEditingController();
-  TextEditingController ACont= TextEditingController();
-//  TextEditingController questionCont= TextEditingController();
+  TextEditingController QUESTION=TextEditingController();
+  TextEditingController A= TextEditingController();
+  TextEditingController B=TextEditingController();
+  TextEditingController C= TextEditingController();
+  TextEditingController D=TextEditingController();
+  TextEditingController E= TextEditingController();
+
 
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
   List<String> valueToString=['A','B','C','D','E'];
+
+  @override
+  void initState(){
+    questionNumber=1;
+
+  }
 
   setAnswer(int value){
     setState(() {
@@ -24,6 +110,11 @@ class _CreateQuiz extends State<CreateQuiz> {
       filled[radioVal]=true;
     });
   }
+
+  saveToFirebase(int q_number){
+    Firestore.instance.collection(this.nameOfQuiz).document(q_number.toString()).setData(quizQuestion.questionToJson());
+  }
+
 
   saveQuestion(){
     final formState=_formKey.currentState;
@@ -37,17 +128,25 @@ class _CreateQuiz extends State<CreateQuiz> {
      // quizQuestion.E=e;
       quizQuestion.correctAnswer=valueToString[radioVal];
       print(quizQuestion.correctAnswer);
-   //   quizQuestion.correctAnswer=valueToString[radioVal];
-     // print(quizQuestion.correctAnswer);
+
+      saveToFirebase(questionNumber);
+      setState(() {
+        questionNumber+=1;
+        //A.clear();
+
+      });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-//    radioVal=-1;
+//    radioVal=-
+    setState(() {
+      nameOfQuiz='${widget.titlequiz}';
+    });
     return Scaffold(
       resizeToAvoidBottomPadding: false,
-      appBar: AppBar(title: Text('CREATE A QUIZ'),),
+      appBar: AppBar(title: Text(nameOfQuiz+" question# "+questionNumber.toString())),
       body: Container(
         width: MediaQuery.of(context).size.width,
         padding: EdgeInsets.all(20.0),
@@ -56,26 +155,32 @@ class _CreateQuiz extends State<CreateQuiz> {
           child: ListView(
           children: <Widget>[
             TextFormField(decoration: InputDecoration(labelText: "question"),
+              controller: QUESTION,
               onSaved: (val)=>quizQuestion.question=val,
               validator: (val)=>val==''?val:null,
             ),
             TextFormField(decoration: InputDecoration(labelText: "A",fillColor: Colors.green,filled: filled[0]),
+              controller: A,
               onSaved: (val)=>quizQuestion.A=val,
               validator: (val)=>val==''?val:null,
             ),
             TextFormField(decoration: InputDecoration(labelText: "B",fillColor: Colors.yellow,filled: filled[1]),
+              controller: B,
               onSaved: (val)=>quizQuestion.B=val,
               validator: (val)=>val==''?val:null,
             ),
             TextFormField(decoration: InputDecoration(labelText: "C",fillColor: Colors.blue,filled: filled[2]),
+              controller: C,
               onSaved: (val)=>quizQuestion.C=val,
               validator: (val)=>val==''?val:null,
             ),
             TextFormField(decoration: InputDecoration(labelText: "D",fillColor: Colors.pink,filled: filled[3]),
+              controller: D,
               onSaved: (val)=>quizQuestion.D=val,
               validator: (val)=>val==''?val:null,
             ),
             TextFormField(decoration: InputDecoration(labelText: "E",fillColor: Colors.orange,filled: filled[4]),
+              controller: E,
               onSaved: (val)=>quizQuestion.E=val,
               validator: (val)=>val==''?val:null,
             ),

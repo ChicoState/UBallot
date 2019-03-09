@@ -24,6 +24,26 @@ class _QuestionsFromFirebase extends State<QuestionsFromFirebase> {
   int counter=1;
 
 
+/*
+
+  getQuestions() async {
+    final DocumentReference postRef = Firestore.instance.document("user/"+userData.uid);
+    Firestore.instance.runTransaction((Transaction tx) async {
+      DocumentSnapshot postSnapshot = await tx.get(postRef);
+      if(postSnapshot.exists) {
+//        if(postSnapshot!=null) {
+        setState(() {
+          ss = postSnapshot;
+        });
+      } else {
+        print('no data');
+        print(userData.uid);
+        changeData();
+      }
+    });
+  }
+*/
+
   @override
   Widget build(BuildContext context) {
 
