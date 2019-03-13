@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-
+import 'dart:async';
 import 'object.dart';
 import 'alterdata.dart';
 import 'login.dart';
+import 'Services/QuizService.dart';
+import 'Services/QuestionService.dart';
+import 'Models/Question.dart';
+import 'Models/Quiz.dart';
 //import 'package:flutter/services.dart';
 //import 'dart:io';
 
@@ -29,6 +34,7 @@ class MyApp extends StatefulWidget{
   _MyApp createState() => _MyApp();
 }
 
+
 class _MyApp extends State<MyApp> {
  // final String user;
 
@@ -39,8 +45,67 @@ class _MyApp extends State<MyApp> {
   Object please=new Object();
   List<bool> bool_list= [false,false,false,false];
   int counter=1;
+  FirebaseUser user;
+  String uid = 'x';
+  List<Question> questions;
+  List<Quiz> quizzes;
+  QuestionService db = new QuestionService();
+  QuizService db2 = new QuizService();
+  StreamSubscription<QuerySnapshot> questSub;
+  StreamSubscription<QuerySnapshot> quizSub;
+
+  getUIDFromFirebase() async {
+    FirebaseUser _user = await FirebaseAuth.instance.currentUser();
+    uid = _user.uid;
+    print(_user.uid);
+    questions = new List();
+    quizzes = new List();
+    questSub = db.getQuestions().listen((QuerySnapshot snapshot) {
+      final List<Question> quests = snapshot.documents
+          .map((documentSnapshot) => Question.fromMap(documentSnapshot.data))
+          .toList();
+      quizSub = db2.getQuiz().listen((QuerySnapshot snapshot) {
+        final List<Quiz> quizz = snapshot.documents
+            .map((documentSnapshot) => Quiz.fromMap(documentSnapshot.data))
+            .toList();
 
 
+    setState(() {
+        user = _user;
+        this.questions = quests;
+        this.quizzes = quizz;
+        print("Quiz : ");
+        print(this.quizzes[0].id);
+      });
+      });
+    });
+
+  }
+
+  @override
+  void initState() {
+    getUIDFromFirebase();
+//get stuff from firebase
+
+    super.initState();
+
+  }
+
+
+
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return Scaffold(
+      appBar: AppBar(title: Text('Test'),),
+      body: Container(
+        //child: Text(this.questions[0].statement == null ? 'waiting...': this.questions[0].statement),
+         child: Text(this.quizzes[0].questions[0] == null ? 'waiting...' : this.quizzes[0].questions[0].get() ),
+      ),
+    );
+  }
+/*
   @override
   Widget build(BuildContext context) {
     
@@ -146,6 +211,7 @@ class _MyApp extends State<MyApp> {
       ),
     );
   }
+  */
 }
 
 /*

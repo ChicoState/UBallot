@@ -38,7 +38,7 @@ class _LoginPageState extends State<LoginPage>{
         assert(user!=null);
         assert(await user.getIdToken()!=null);
      //   Navigator.push(context, MaterialPageRoute(builder: (context)=> new MyApp()));
-        Navigator.push(context, MaterialPageRoute(builder: (context)=> new MyApp(user: user.uid)));
+        Navigator.push(context, MaterialPageRoute(builder: (context)=> MyApp(user: user.uid)));
 
       } catch(e){
         print(e.message);

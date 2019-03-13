@@ -31,10 +31,9 @@ class QuizService{
 
   }
 
-  Stream<QuerySnapshot> getQuiz(String  uid) async{
-    Stream<QuerySnapshot> snapshots = quizCollection.snapshots();
-
-    return snapshots;
+  Stream<QuerySnapshot> getQuiz(){//String  uid) {
+    //return quizCollection.where('uid', isEqualTo: uid).snapshots();
+    return quizCollection.snapshots();
   }
 
 
