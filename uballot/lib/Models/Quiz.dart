@@ -3,6 +3,43 @@ import 'Question.dart';
 
 class Quiz {
 
+  String _className;
+  List<String> _quizzes;
+
+  Quiz(this._className, this._quizzes);
+
+  Quiz.map(dynamic obj){
+    this._className = obj['className'];
+    this._quizzes = obj['quizzes'];
+
+  }
+
+  String get className => _className;
+  List<String> get quizzes => _quizzes;
+
+
+  Map<String, dynamic> toMap() {
+    var map = new Map<String, dynamic>();
+    if (_className != null) {
+      map['className'] = _className;
+    }
+    map['quizzes'] = _quizzes;
+
+    return map;
+  }
+
+  Quiz.fromMap(Map<String, dynamic> map){
+    this._className = map['className'];
+    var q = map['quizzes'];
+    this._quizzes = new List<String>.from(q);
+  }
+}
+
+
+
+/**
+class Quiz {
+
   String _id;
   String _name;
   List<DocumentReference> _questions;
@@ -42,3 +79,4 @@ class Quiz {
     this._questions = map['questions'];
   }
 }
+*/

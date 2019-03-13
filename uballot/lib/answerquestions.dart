@@ -4,14 +4,90 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'object.dart';
 import 'alterdata.dart';
 import 'Widgets/Question.dart';
+import 'Models/Quiz.dart';
+import 'Services/QuizService.dart';
+import 'dart:async';
 
 
-class QuestionsFromFirebase extends StatefulWidget{
+class QuizzesFromFirebase extends StatefulWidget{
+  //@override
+  //_QuestionsFromFirebase createState() => _QuestionsFromFirebase();
   @override
-  _QuestionsFromFirebase createState() => _QuestionsFromFirebase();
+  _QuizzesFromFirebase createState() => _QuizzesFromFirebase();
 }
 
+class _QuizzesFromFirebase extends State<QuizzesFromFirebase> {
+  String quizName;
+  List<Quiz> quizzes;
+  List<String> names = new List();
+  CollectionReference collectionReference = Firestore.instance.collection(('Quizzes'));
+  QuizService quizService = new QuizService();
+  StreamSubscription<QuerySnapshot> quizStream;
 
+  getQuizzesFromFirebase() async {
+    quizzes = new List();
+    quizStream = quizService.getQuiz().listen((QuerySnapshot qs){
+      final List<Quiz> q = qs.documents.map((docSnap) =>
+        Quiz.fromMap(docSnap.data)).toList();
+
+      setState(() {
+        this.quizzes = q;
+        this.names = this.quizzes[0].quizzes;
+        print("----------------");
+        print(this.names.toString());
+      });
+      });
+  }
+
+  @override
+  void initState(){
+    getQuizzesFromFirebase();
+    super.initState();
+  }
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+
+        home: Scaffold(
+          appBar: AppBar(
+            title: Text("Choose a Quiz"),
+            centerTitle: true,
+          ),
+          body: new Center(
+            child: new Container(
+            child: new ListView.builder(
+              itemCount: names.length,
+              itemBuilder: (context, index){
+                final item = names[index];
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    new RaisedButton(
+
+                      child: Text(item,
+                        style: TextStyle(color: Colors.white,
+                          fontSize: 20,
+                          decorationColor: Colors.green),
+                      ),
+                      color: Colors.green,
+                      //onPressed: null,
+                    )
+
+                  ],
+
+                );
+
+              }),
+
+        ),
+          ),
+        ),
+    );
+  }
+}
+
+//TODO: navigate to questions and display A,B,C,D
+/**
 class _QuestionsFromFirebase extends State<QuestionsFromFirebase> {
   // final String user;
 
@@ -150,3 +226,4 @@ class _QuestionsFromFirebase extends State<QuestionsFromFirebase> {
     );
   }
 }
+    */

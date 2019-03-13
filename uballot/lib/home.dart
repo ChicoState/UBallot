@@ -103,7 +103,7 @@ class _Home extends State<Home> {
   final List<Widget> renderedWidget =[
     NewQuizName(),
     //CreateQuiz(),
-    QuestionsFromFirebase(),
+    QuizzesFromFirebase(),
     test(),
   ];
 
