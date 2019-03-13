@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'home.dart';
 
-import 'dart:async';
+import 'createquiz.dart';
 import 'object.dart';
 import 'alterdata.dart';
 import 'login.dart';
-import 'Services/QuizService.dart';
-import 'Services/QuestionService.dart';
-import 'Models/Question.dart';
-import 'Models/Quiz.dart';
 //import 'package:flutter/services.dart';
 //import 'dart:io';
 
@@ -21,9 +17,32 @@ https://stackoverflow.com/questions/49869873/flutter-update-widgets-on-resume
 https://stackoverflow.com/questions/50863681/flutter-how-do-i-toggle-the-color-of-a-raisedbutton-upon-click
  */
 
-void main() => runApp(new MaterialApp(
-    home: new LoginPage()),
-);
+void main() {
+  runApp(UBallot());
+}
+
+class UBallot extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      routes: <String,WidgetBuilder>{
+        '/':(context)=> Home(),
+        '/login':(context)=>LoginPage(),
+        '/home':(context)=> Home(),
+        '/createquiz':(context)=>CreateQuiz(),
+      },
+    );
+  }
+}
+
+
+
+
+
+//void main() => runApp(new MaterialApp(
+//    home: new Home()),
+//);
 
 class MyApp extends StatefulWidget{
   final String user;
@@ -33,7 +52,6 @@ class MyApp extends StatefulWidget{
 
   _MyApp createState() => _MyApp();
 }
-
 
 class _MyApp extends State<MyApp> {
  // final String user;
@@ -45,70 +63,10 @@ class _MyApp extends State<MyApp> {
   Object please=new Object();
   List<bool> bool_list= [false,false,false,false];
   int counter=1;
-  FirebaseUser user;
-  String uid = 'x';
-  List<Question> questions;
-  List<Quiz> quizzes;
-  QuestionService db = new QuestionService();
-  QuizService db2 = new QuizService();
-  StreamSubscription<QuerySnapshot> questSub;
-  StreamSubscription<QuerySnapshot> quizSub;
-
-  getUIDFromFirebase() async {
-    FirebaseUser _user = await FirebaseAuth.instance.currentUser();
-    uid = _user.uid;
-    print(_user.uid);
-    questions = new List();
-    quizzes = new List();
-    questSub = db.getQuestions().listen((QuerySnapshot snapshot) {
-      final List<Question> quests = snapshot.documents
-          .map((documentSnapshot) => Question.fromMap(documentSnapshot.data))
-          .toList();
-      quizSub = db2.getQuiz().listen((QuerySnapshot snapshot) {
-        final List<Quiz> quizz = snapshot.documents
-            .map((documentSnapshot) => Quiz.fromMap(documentSnapshot.data))
-            .toList();
-
-
-    setState(() {
-        user = _user;
-        this.questions = quests;
-        this.quizzes = quizz;
-        print("Quiz : ");
-        print(this.quizzes[0].id);
-      });
-      });
-    });
-
-  }
-
-  @override
-  void initState() {
-    getUIDFromFirebase();
-//get stuff from firebase
-
-    super.initState();
-
-  }
-
-
 
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    return Scaffold(
-      appBar: AppBar(title: Text('Test'),),
-      body: Container(
-        //child: Text(this.questions[0].statement == null ? 'waiting...': this.questions[0].statement),
-         child: Text(this.quizzes[0].questions[0] == null ? 'waiting...' : this.quizzes[0].questions[0].get() ),
-      ),
-    );
-  }
-/*
-  @override
-  Widget build(BuildContext context) {
-    
     return MaterialApp(
       title: 'UBallot',
       //probably not needed
@@ -211,16 +169,13 @@ class _MyApp extends State<MyApp> {
       ),
     );
   }
-  */
 }
 
 /*
 handleAppLifecycleState() {
   AppLifecycleState _lastLifecyleState;
   SystemChannels.lifecycle.setMessageHandler((msg) {
-
     print('SystemChannels> $msg');
-
     switch (msg) {
       case "AppLifecycleState.paused":
         _lastLifecyleState = AppLifecycleState.paused;
@@ -238,5 +193,4 @@ handleAppLifecycleState() {
     }
   });
 }
-
 */

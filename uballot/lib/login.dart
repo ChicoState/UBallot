@@ -19,30 +19,48 @@ class LoginPage extends StatefulWidget{
   _LoginPageState createState() => new _LoginPageState();
 }
 
+enum FormType {
+  login,
+  register
+}
+
 class _LoginPageState extends State<LoginPage>{
 
   _LoginData credentials = new _LoginData();
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
   final FirebaseAuth auth= FirebaseAuth.instance;
 
-  Future<void> SignIn() async{
+  FormType _formType = FormType.login;
+
+  Future<void> signIn() async{
     final formState=_formKey.currentState;
 
     if(formState.validate()){
       formState.save();
       try{
-        FirebaseUser user =
-        await FirebaseAuth.instance.signInWithEmailAndPassword(
-            email: credentials.email, password: credentials.password);
-        //validateUser(credentials);
-        assert(user!=null);
-        assert(await user.getIdToken()!=null);
-     //   Navigator.push(context, MaterialPageRoute(builder: (context)=> new MyApp()));
-        Navigator.push(context, MaterialPageRoute(builder: (context)=> MyApp(user: user.uid)));
-
+        if (_formType == FormType.login) {
+          FirebaseUser user =
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
+              email: credentials.email, password: credentials.password);
+          //validateUser(credentials);
+          assert(user != null);
+          assert(await user.getIdToken() != null);
+          //   Navigator.push(context, MaterialPageRoute(builder: (context)=> new MyApp()));
+          Navigator.push(context, MaterialPageRoute(
+              builder: (context) => new MyApp(user: user.uid)));
+        } else {
+          FirebaseUser user = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+              email: credentials.email, password: credentials.password);
+          //validateUser(credentials);
+          assert(user != null);
+          assert(await user.getIdToken() != null);
+          //   Navigator.push(context, MaterialPageRoute(builder: (context)=> new MyApp()));
+          Navigator.push(context, MaterialPageRoute(
+              builder: (context) => new MyApp(user: user.uid)));
+        }
       } catch(e){
         print(e.message);
-      //  return;
+        //  return;
         //FIX EXIT HERE LATER!! OR FAIL LOGIN
       }
     }
@@ -59,54 +77,131 @@ class _LoginPageState extends State<LoginPage>{
     return returnedUser;
   }
 
+  void moveToRegister() {
+    _formKey.currentState.reset();
+    setState(() {
+      _formType = FormType.register;
+    });
+  }
 
+  void moveToLogin() {
+    _formKey.currentState.reset();
+    setState(() {
+      _formType = FormType.login;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     final Size screenSize=MediaQuery.of(context).size;
 
-
     return new Scaffold(
+      resizeToAvoidBottomPadding: false,
       appBar: new AppBar(
-        title: new Text('Login'),
+        title: new Text('Account'),
       ),
       body: new Container(
         width: screenSize.width,
         padding: new EdgeInsets.all(20.0),
         child: new Form(
           key: this._formKey,
-          child: new ListView(
-            children: <Widget>[
-              new TextFormField(
-                decoration: new InputDecoration(
-                  labelText: "email"
-                ),
-                onSaved: (val)=> credentials.email=val,
-                validator: (val)=>val==''?val:null,
-              ),
-              new TextFormField(
-                decoration: new InputDecoration(
-                    labelText: "password",
-                ),
-                onSaved: (val)=> credentials.password=val,
-                validator: (val)=>val==''?val:null,
-              ),
-              new Container(
-                width: screenSize.width,
-                child: RaisedButton(
-                    child: new Text(
-                      'log in', style: new TextStyle(
-                      color: Colors.white
-                    ),
-                    ),
-                    onPressed: SignIn),
-              ),
-             ],
-          ),
-
+          child: new Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: buildInputs()+ buildSubmitButtons(),
           ),
         ),
-      );
+      ),
+    );
+  }
+  List<Widget> buildInputs() {
+    if (_formType == FormType.login) {
+      return [
+        new TextFormField(
+          decoration: new InputDecoration(
+              labelText: "email"
+          ),
+          onSaved: (val) => credentials.email = val,
+          validator: (val) => val == '' ? val : null,
+        ),
+        new TextFormField(
+          decoration: new InputDecoration(
+            labelText: "password",
+          ),
+          obscureText: true,
+          onSaved: (val) => credentials.password = val,
+          validator: (val) => val == '' ? val : null,
+        ),
+      ];
+    } else {
+      return [
+        new TextFormField(
+          decoration: new InputDecoration(
+              labelText: "email"
+          ),
+          onSaved: (val) => credentials.email = val,
+          validator: (val) => val == '' ? val : null,
+        ),
+        new TextFormField(
+            decoration: new InputDecoration(
+            labelText: "password",
+          ),
+          obscureText: true,
+          onSaved: (val) => credentials.password = val,
+          validator: (val) => val == '' ? val : null,
+        ),
+        new TextFormField(
+          decoration: new InputDecoration(
+            labelText: "re-enter password",
+          ),
+          onSaved: (val) => val,
+          validator: (val) {
+            if (val != credentials.password) {
+              return 'Passwords do not match';
+            }
+          },
+          obscureText: true,
+        ),
+      ];
+    }
+  }
+
+  List<Widget> buildSubmitButtons() {
+    if (_formType == FormType.login) {
+      return [
+        RaisedButton(
+            child: new Text(
+              'Log in', style: new TextStyle(
+                color: Colors.white
+            ),
+            ),
+            onPressed: signIn),
+        FlatButton(
+          child: Text(
+            'Create an account', style: new TextStyle(
+              color: Colors.blue
+          ),
+          ),
+          onPressed: moveToRegister,
+        )
+      ];
+    } else {
+      return [
+        RaisedButton(
+            child: new Text(
+              'Create account', style: new TextStyle(
+                color: Colors.white
+            ),
+            ),
+            onPressed: signIn),
+        FlatButton(
+          child: Text(
+            'Already have account? Login', style: new TextStyle(
+              color: Colors.blue
+          ),
+          ),
+          onPressed: moveToLogin,
+        )
+      ];
+    }
   }
 }
-

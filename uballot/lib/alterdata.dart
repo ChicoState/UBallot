@@ -1,9 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:async';
 
-
-
-
 class ChangeDatabase {
 
   Future<void> addData(object) async {

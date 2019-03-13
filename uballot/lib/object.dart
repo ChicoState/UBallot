@@ -1,5 +1,3 @@
-
-
 class Object{
   String uid='default';
   String something='default';
@@ -12,7 +10,6 @@ class Object{
       "answer":answer,
       "question_number":question_number,
       "uid":uid,
-
     };
   }
 
