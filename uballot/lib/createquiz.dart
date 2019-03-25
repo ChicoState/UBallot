@@ -112,7 +112,13 @@ class _CreateQuiz extends State<CreateQuiz> {
   }
 
   saveToFirebase(int q_number){
-    Firestore.instance.collection(this.nameOfQuiz).document(q_number.toString()).setData(quizQuestion.questionToJson());
+//    Firestore.instance.collection(this.nameOfQuiz).document(q_number.toString()).setData(quizQuestion.questionToJson());
+
+
+  Map<String,Map<String,Map<String,Map<String,String>>>> quiz={'quiz':{this.nameOfQuiz:{q_number.toString():quizQuestion.questionToJson()}}};
+  Firestore.instance.collection('Quizzes').document('Class1').setData(quiz,merge: true);
+
+//    Firestore.instance.collection('Quizzes').document('Class1').setData(quizQuestion.questionToJson());
   }
 
 

@@ -23,6 +23,23 @@ class _QuizzesFromFirebase extends State<QuizzesFromFirebase> {
   CollectionReference collectionReference = Firestore.instance.collection(('Quizzes'));
   QuizService quizService = new QuizService();
   StreamSubscription<QuerySnapshot> quizStream;
+  List<String> quizList= [] ;
+
+  StreamSubscription<DocumentSnapshot> getnames;
+
+  showClassQuizzes() async {
+    getnames = Firestore.instance.collection('Quizzes').
+    document('Class1').snapshots().listen((qs){
+      if(qs.exists) {
+        for(String key in qs.data['quiz'].keys) {
+          setState(() {
+            quizList.add(key.toString());
+          });
+        }
+      }
+    });
+  }
+
 
   getQuizzesFromFirebase() async {
     quizzes = new List();
@@ -39,15 +56,19 @@ class _QuizzesFromFirebase extends State<QuizzesFromFirebase> {
       });
   }
 
+
+
   @override
   void initState(){
     getQuizzesFromFirebase();
+    showClassQuizzes();
+
     super.initState();
   }
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
 
+    return MaterialApp(
         home: Scaffold(
           appBar: AppBar(
             title: Text("Choose a Quiz"),
@@ -56,35 +77,102 @@ class _QuizzesFromFirebase extends State<QuizzesFromFirebase> {
           body: new Center(
             child: new Container(
             child: new ListView.builder(
-              itemCount: names.length,
+              itemCount: quizList.length,
               itemBuilder: (context, index){
-                final item = names[index];
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    new RaisedButton(
-
-                      child: Text(item,
-                        style: TextStyle(color: Colors.white,
-                          fontSize: 20,
-                          decorationColor: Colors.green),
-                      ),
-                      color: Colors.green,
-                      //onPressed: null,
-                    )
-
-                  ],
-
+                final item = quizList[index];
+                return Center(
+                  child: RaisedButton(onPressed: null,child:Text(item),
+                    /// route to page pass in quiz name and take quiz.
+                  ),
                 );
-
               }),
-
         ),
           ),
         ),
     );
   }
 }
+
+
+
+class QuestionsFromFirebase extends StatefulWidget{
+  final String titleOfQuiz;
+  QuestionsFromFirebase({Key key,this.titleOfQuiz}): super(key:key);
+  @override
+  _QuestionsFromFirebase createState() => _QuestionsFromFirebase();
+}
+
+class _QuestionsFromFirebase extends State<QuestionsFromFirebase> {
+
+
+  String quizName;
+  List<Quiz> quizzes;
+  List<String> names = new List();
+  CollectionReference collectionReference = Firestore.instance.collection(('Quizzes'));
+  QuizService quizService = new QuizService();
+  StreamSubscription<QuerySnapshot> quizStream;
+  DocumentSnapshot ds;
+  String name;
+  StreamSubscription<DocumentSnapshot> getnames;
+  String sample;
+
+
+  @override
+  void initState(){
+    getQuizzesFromFirebase();
+    showClassQuizzes();
+    super.initState();
+  }
+
+  showClassQuizzes() async {
+    getnames = Firestore.instance.collection('Quizzes').
+    document('Class1').snapshots().listen((qs){
+      if(qs.exists) {
+       // print('qs is'+qs.data['quiz']);
+        for(String quiz in qs['quiz']) {
+          print(quiz);
+        }
+        setState(() {
+          sample=qs.data['quiz'];
+        });
+      }
+    });
+  }
+
+
+  getQuizzesFromFirebase() async {
+    quizzes = new List();
+    DocumentReference document=Firestore.instance.collection('Quizzes').document('Class1');
+    document.get().then((doc){
+      if (doc.exists){
+        print('document exists');
+        print(doc.data['className'].toString());
+        setState(() {
+          name=doc.data['className'].toString();
+          print(doc.data['quiz']['Quiz1']['question1']['question']['a']);
+        });
+      }
+    });
+
+
+  }
+
+
+
+
+  @override
+  Widget build(BuildContext context) {
+    showClassQuizzes();
+    print(sample);
+
+    return Scaffold(
+      appBar: AppBar(title: Text('${widget.titleOfQuiz}'),),
+      body: Text(sample),
+    );
+  }
+}
+
+
 
 //TODO: navigate to questions and display A,B,C,D
 /**
