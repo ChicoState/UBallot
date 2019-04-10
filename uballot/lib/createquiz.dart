@@ -93,6 +93,7 @@ class _CreateQuiz extends State<CreateQuiz> {
   TextEditingController C= TextEditingController();
   TextEditingController D=TextEditingController();
   TextEditingController E= TextEditingController();
+  TextEditingController FeedBack= TextEditingController();
 
 
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
@@ -137,7 +138,7 @@ class _CreateQuiz extends State<CreateQuiz> {
 
       saveToFirebase(questionNumber);
       setState(() {
-        A.clear();B.clear();QUESTION.clear();C.clear();D.clear();E.clear();
+        A.clear();B.clear();QUESTION.clear();C.clear();D.clear();E.clear();FeedBack.clear();
         radioVal=-1;
         questionNumber+=1;
         filled.fillRange(0, filled.length,false);
@@ -190,6 +191,11 @@ class _CreateQuiz extends State<CreateQuiz> {
               controller: E,
               onSaved: (val)=>quizQuestion.E=val,
               //validator: (val)=>val==''?val:null,
+            ),
+            TextFormField(decoration: InputDecoration(labelText: "FeedBack"),
+              controller: FeedBack,
+              onSaved: (val)=>quizQuestion.FeedBack=val,
+              validator: (val)=>val==''?val:null,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,

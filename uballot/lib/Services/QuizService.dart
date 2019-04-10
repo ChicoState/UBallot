@@ -11,7 +11,7 @@ class QuizService{
 
   QuizService.internal();
 
-  Future<Quiz> createQuiz(String className, List<String> classes) async{
+  Future<Quiz> createQuiz(String className, List<Map<String, Map<String, Map<String,String>>>> classes) async{
     final TransactionHandler createTransaction = (Transaction tx) async{
       final DocumentSnapshot ds = await tx.get(quizCollection.document());
 

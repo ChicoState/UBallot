@@ -7,6 +7,7 @@ import 'Widgets/Question.dart';
 import 'Models/Quiz.dart';
 import 'Services/QuizService.dart';
 import 'dart:async';
+import 'takequiz.dart';
 
 
 class QuizzesFromFirebase extends StatefulWidget{
@@ -19,11 +20,14 @@ class QuizzesFromFirebase extends StatefulWidget{
 class _QuizzesFromFirebase extends State<QuizzesFromFirebase> {
   String quizName;
   List<Quiz> quizzes;
-  List<String> names = new List();
+  List<Map<String, Map<String, Map<String,String>>>> names = new List();
   CollectionReference collectionReference = Firestore.instance.collection(('Quizzes'));
   QuizService quizService = new QuizService();
   StreamSubscription<QuerySnapshot> quizStream;
   List<String> quizList= [] ;
+  List<Map<String, dynamic>> questions = [];
+  Question q = new Question();
+
 
   StreamSubscription<DocumentSnapshot> getnames;
 
@@ -40,7 +44,7 @@ class _QuizzesFromFirebase extends State<QuizzesFromFirebase> {
     });
   }
 
-
+/*
   getQuizzesFromFirebase() async {
     quizzes = new List();
     quizStream = quizService.getQuiz().listen((QuerySnapshot qs){
@@ -55,13 +59,32 @@ class _QuizzesFromFirebase extends State<QuizzesFromFirebase> {
       });
       });
   }
+*/
+  getQuestions(String name) async{
+    Firestore.instance.collection('Quizzes').
+    document('Class1').snapshots().listen((qs){
+      if(qs.exists) {
+        //print(qs.data['quiz'][name].map.foreach())
+        for(String key in qs.data['quiz'][name].keys) {
+          setState(() {
+            //print(new Map<dynamic, dynamic>.from(qs.data['quiz'][name][key.toString()]));
+            questions.add(q.questionFromJson(new Map<dynamic, dynamic>.from(qs.data['quiz'][name][key.toString()])));
+          });
+        }
+        print(questions.length);
+        //qs.data['quiz'][name].foreach((q) => print(q.toString()));
+        //print(qs.data['quiz'][name].map((questionNum).map((i) => q.questionFromJson(i))).toList());
+      }
+    });
+  }
 
 
 
   @override
   void initState(){
-    getQuizzesFromFirebase();
+    //getQuizzesFromFirebase();
     showClassQuizzes();
+    getQuestions('test2');
 
     super.initState();
   }
@@ -81,7 +104,13 @@ class _QuizzesFromFirebase extends State<QuizzesFromFirebase> {
               itemBuilder: (context, index){
                 final item = quizList[index];
                 return Center(
-                  child: RaisedButton(onPressed: null,child:Text(item),
+                  child: RaisedButton(onPressed: () {
+                    Navigator.of(context).push(
+                        new MaterialPageRoute(
+                            builder: (context) => new TakeQuiz(quizName: item,)
+                        )
+                    );
+                  },child:Text(item),
                     /// route to page pass in quiz name and take quiz.
                   ),
                 );

@@ -4,7 +4,7 @@ import 'Question.dart';
 class Quiz {
 
   String _className;
-  List<String> _quizzes;
+  List<Map<String, Map<String, Map<String,String>>>> _quizzes;
 
   Quiz(this._className, this._quizzes);
 
@@ -15,7 +15,7 @@ class Quiz {
   }
 
   String get className => _className;
-  List<String> get quizzes => _quizzes;
+  List<Map<String, Map<String, Map<String,String>>>> get quizzes => _quizzes;
 
 
   Map<String, dynamic> toMap() {
@@ -31,7 +31,7 @@ class Quiz {
   Quiz.fromMap(Map<String, dynamic> map){
     this._className = map['className'];
     var q = map['quizzes'];
-    this._quizzes = new List<String>.from(q);
+    this._quizzes = new List<Map<String, Map<String, Map<String,String>>>>.from(q);
   }
 }
 

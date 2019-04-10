@@ -154,9 +154,9 @@ class _Home extends State<Home> {
               currentIndex: currentPage,
               onTap: changePage,
               items: [
-              BottomNavigationBarItem(title: Text('sds'),icon: Icon(Icons.account_circle)),
-              BottomNavigationBarItem(title: Text('test'),icon: Icon(Icons.image)),
-              BottomNavigationBarItem(title: Text('aaaa'),icon: Icon(Icons.image)),
+              BottomNavigationBarItem(title: Text('Create Quiz'),icon: Icon(Icons.account_circle)),
+              BottomNavigationBarItem(title: Text('Display Quiz'),icon: Icon(Icons.image)),
+              BottomNavigationBarItem(title: Text('take quiz'),icon: Icon(Icons.image)),
           ],
             ),
         ),
