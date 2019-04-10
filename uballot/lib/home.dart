@@ -148,9 +148,10 @@ class _Home extends State<Home> {
       body: renderedWidget[currentPage],
       bottomNavigationBar:
         Theme(data: Theme.of(context).copyWith(
-          canvasColor:  Colors.red,
+          canvasColor:  Colors.blue[900],
         ),
             child: BottomNavigationBar(
+              fixedColor: Colors.white,
               currentIndex: currentPage,
               onTap: changePage,
               items: [

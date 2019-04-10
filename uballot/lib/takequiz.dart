@@ -55,15 +55,15 @@ class _TakeQuiz extends State<TakeQuiz> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        backgroundColor: Colors.grey,
-        appBar: AppBar(title: Text('$quizName'), centerTitle: true,),
+        backgroundColor: Colors.blueGrey[400],
+        appBar: AppBar(title: Text('$quizName',style: TextStyle(color: Colors.white),), centerTitle: true,backgroundColor: Colors.blue[900]),
         body: Center(
           child:Column(
           children: <Widget>[
             Column(
               children: <Widget>[
                 Container(
-                    child:Text(questions[questionNumber]['question'].toString(),style: TextStyle(fontSize: 20),
+                    child:Text(questions[questionNumber]['question'].toString(),style: TextStyle(fontSize: 30,color: Colors.white),
                     ),
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height/5,
@@ -78,8 +78,8 @@ class _TakeQuiz extends State<TakeQuiz> {
             child:
           Column(
             children: <Widget>[
-              Container(child:RaisedButton(color:bool_list[0]?Colors.deepPurple:Colors.cyan,child:
-              Text(questions[questionNumber]['A'].toString()),onPressed: (){
+              Container(child:RaisedButton(color:bool_list[0]?Colors.black:Colors.white,child:
+              Text(questions[questionNumber]['A'].toString(),style: TextStyle(color: bool_list[0]?Colors.white:Colors.black),),onPressed: (){
                 setState(() {
                   selected=true;
                   bool_list=[true,false,false,false,false];
@@ -87,27 +87,27 @@ class _TakeQuiz extends State<TakeQuiz> {
               },
               ),
               width: MediaQuery.of(context).size.width,),
-              Container(child:RaisedButton(color:bool_list[1]?Colors.deepPurple:Colors.cyan,child:Text(questions[0]['B'].toString()),onPressed: (){
+              Container(child:RaisedButton(color:bool_list[1]?Colors.black:Colors.white,child:Text(questions[questionNumber]['B'].toString(),style: TextStyle(color: bool_list[1]?Colors.white:Colors.black),),onPressed: (){
                 setState(() {
                   selected=true;
                   bool_list=[false,true,false,false,false];
 
                 });
               },),width: MediaQuery.of(context).size.width,),
-              (questions[questionNumber]['C']!="")?Container(child:RaisedButton(color:bool_list[2]?Colors.deepPurple:Colors.cyan,child:Text(questions[0]['C'].toString()),onPressed: (){
+              (questions[questionNumber]['C']!="")?Container(child:RaisedButton(color:bool_list[2]?Colors.black:Colors.white,child:Text(questions[questionNumber]['C'].toString(),style: TextStyle(color: bool_list[2]?Colors.white:Colors.black),),onPressed: (){
                 setState(() {
                   selected=true;
                   bool_list=[false,false,true,false,false];
                 });
               },),
               width: MediaQuery.of(context).size.width,):Container(),
-              (questions[questionNumber]['D']!="")?Container(child:RaisedButton(color:bool_list[3]?Colors.deepPurple:Colors.cyan,child:Text(questions[0]['C'].toString()),onPressed: (){
-                setState(() {
+    (questions[questionNumber]['D']!="")?Container(child:RaisedButton(color:bool_list[3]?Colors.black:Colors.white,child:Text(questions[questionNumber]['D'].toString(),style: TextStyle(color: bool_list[3]?Colors.white:Colors.black),),onPressed: (){
+       setState(() {
                   selected=true;
                   bool_list=[false,false,false,true,false];
                 });
               },),width: MediaQuery.of(context).size.width,):Container(),
-              (questions[questionNumber]['E']!="")?Container(width: MediaQuery.of(context).size.width,child:RaisedButton(color:bool_list[4]?Colors.deepPurple:Colors.cyan,child:Text(questions[0]['C'].toString()),onPressed: (){
+              (questions[questionNumber]['E']!="")?Container(child:RaisedButton(color:bool_list[4]?Colors.black:Colors.white,child:Text(questions[questionNumber]['E'].toString(),style: TextStyle(color: bool_list[4]?Colors.white:Colors.black),),onPressed: (){
                 setState(() {
                   selected=true;
                   bool_list=[false,false,false,false,true];

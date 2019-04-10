@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f3d5548b-6b09-417d-a8dc-0e4ff3002a25" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uballot/lib/answerquestions.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uballot/lib/answerquestions.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uballot/lib/home.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uballot/lib/home.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/uballot/lib/takequiz.dart" beforeDir="false" afterPath="$PROJECT_DIR$/uballot/lib/takequiz.dart" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -40,12 +39,12 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="dart" value="11702" />
+          <entry key="dart" value="12032" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Dart" value="11702" />
+          <entry key="Dart" value="12032" />
         </counts>
       </usages-collector>
     </session>
@@ -85,8 +84,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/uballot/lib/takequiz.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="123" column="18" selection-start-line="123" selection-start-column="18" selection-end-line="123" selection-end-column="18" />
+            <state relative-caret-position="133">
+              <caret line="81" column="123" selection-start-line="81" selection-start-column="123" selection-end-line="81" selection-end-column="123" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
@@ -97,8 +96,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/uballot/lib/home.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="143">
-              <caret line="54" column="26" selection-start-line="54" selection-start-column="26" selection-end-line="54" selection-end-column="26" />
+            <state relative-caret-position="193">
+              <caret line="153" column="38" selection-start-line="153" selection-start-column="38" selection-end-line="153" selection-end-column="38" />
             </state>
           </provider>
         </entry>
@@ -157,8 +156,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>submitquizname</find>
-      <find>form</find>
       <find>SubmitQuizname</find>
       <find>CreateQuiz</find>
       <find>savetofireb</find>
@@ -187,6 +184,8 @@
       <find>rang</find>
       <find>index</find>
       <find>key</find>
+      <find>bot</find>
+      <find>bottom</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -202,9 +201,9 @@
         <option value="$PROJECT_DIR$/uballot/lib/object.dart" />
         <option value="$PROJECT_DIR$/uballot/lib/Widgets/Question.dart" />
         <option value="$PROJECT_DIR$/uballot/lib/main.dart" />
-        <option value="$PROJECT_DIR$/uballot/lib/home.dart" />
         <option value="$PROJECT_DIR$/uballot/lib/createquiz.dart" />
         <option value="$PROJECT_DIR$/uballot/lib/answerquestions.dart" />
+        <option value="$PROJECT_DIR$/uballot/lib/home.dart" />
         <option value="$PROJECT_DIR$/uballot/lib/takequiz.dart" />
       </list>
     </option>
@@ -320,13 +319,13 @@
     <editor active="true" />
     <layout>
       <window_info id="Captures" order="0" weight="0.25" />
-      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.25059855" />
+      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.25059855" />
       <window_info id="Structure" order="2" side_tool="true" />
       <window_info id="Image Layers" order="3" />
       <window_info id="Designer" order="4" />
       <window_info id="Capture Tool" order="5" />
       <window_info id="Favorites" order="6" side_tool="true" />
-      <window_info anchor="bottom" id="Run" order="0" visible="true" weight="0.32952693" />
+      <window_info active="true" anchor="bottom" id="Run" order="0" visible="true" weight="0.32952693" />
       <window_info anchor="bottom" id="TODO" order="1" weight="0.32952693" />
       <window_info anchor="bottom" id="Debug" order="2" />
       <window_info anchor="bottom" id="Terminal" order="3" weight="0.32952693" />
@@ -500,15 +499,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/uballot/lib/home.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="143">
-          <caret line="54" column="26" selection-start-line="54" selection-start-column="26" selection-end-line="54" selection-end-column="26" />
+        <state relative-caret-position="193">
+          <caret line="153" column="38" selection-start-line="153" selection-start-column="38" selection-end-line="153" selection-end-column="38" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/uballot/lib/takequiz.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="123" column="18" selection-start-line="123" selection-start-column="18" selection-end-line="123" selection-end-column="18" />
+        <state relative-caret-position="133">
+          <caret line="81" column="123" selection-start-line="81" selection-start-column="123" selection-end-line="81" selection-end-column="123" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>
