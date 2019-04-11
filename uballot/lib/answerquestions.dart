@@ -8,6 +8,7 @@ import 'Models/Quiz.dart';
 import 'Services/QuizService.dart';
 import 'dart:async';
 import 'takequiz.dart';
+import 'login.dart';
 
 
 class QuizzesFromFirebase extends StatefulWidget{
@@ -80,6 +81,13 @@ class _QuizzesFromFirebase extends State<QuizzesFromFirebase> {
 
 
 
+  Future<LoginPage>_logOut() async{
+    await FirebaseAuth.instance.signOut().then((_){
+      Navigator.of(context).pushNamedAndRemoveUntil('/login',(Route<dynamic> route) => false);
+    });
+    return LoginPage();
+  }
+
   @override
   void initState(){
     //getQuizzesFromFirebase();
@@ -93,9 +101,14 @@ class _QuizzesFromFirebase extends State<QuizzesFromFirebase> {
 
     return MaterialApp(
         home: Scaffold(
+          backgroundColor: Colors.blueGrey[400],
           appBar: AppBar(
-            title: Text("Choose a Quiz"),
+            title: Text("Choose a Quiz",),
             centerTitle: true,
+            backgroundColor: Colors.blue[900],
+            actions: <Widget>[
+              FlatButton(onPressed: _logOut, child: IconButton(color: Colors.white,icon: Icon(Icons.exit_to_app), onPressed: ()=> _logOut()),),
+            ],
           ),
           body: new Center(
             child: new Container(
@@ -104,13 +117,18 @@ class _QuizzesFromFirebase extends State<QuizzesFromFirebase> {
               itemBuilder: (context, index){
                 final item = quizList[index];
                 return Center(
-                  child: RaisedButton(onPressed: () {
+                  child:Container(
+                    width: MediaQuery.of(context).size.width,
+                  child: RaisedButton(
+                    color: Colors.yellow[400],
+                    onPressed: () {
                     Navigator.of(context).push(
                         new MaterialPageRoute(
                             builder: (context) => new TakeQuiz(quizName: item,)
                         )
                     );
                   },child:Text(item),
+                ),
                     /// route to page pass in quiz name and take quiz.
                   ),
                 );

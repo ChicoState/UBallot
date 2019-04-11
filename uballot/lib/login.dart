@@ -47,7 +47,7 @@ class _LoginPageState extends State<LoginPage>{
           assert(await user.getIdToken() != null);
           //   Navigator.push(context, MaterialPageRoute(builder: (context)=> new MyApp()));
           Navigator.push(context, MaterialPageRoute(
-              builder: (context) => new MyApp(user: user.uid)));
+              builder: (context) => new UBallot()));
         } else {
           FirebaseUser user = await FirebaseAuth.instance.createUserWithEmailAndPassword(
               email: credentials.email, password: credentials.password);
@@ -56,7 +56,7 @@ class _LoginPageState extends State<LoginPage>{
           assert(await user.getIdToken() != null);
           //   Navigator.push(context, MaterialPageRoute(builder: (context)=> new MyApp()));
           Navigator.push(context, MaterialPageRoute(
-              builder: (context) => new MyApp(user: user.uid)));
+              builder: (context) => new UBallot()));
         }
       } catch(e){
         print(e.message);

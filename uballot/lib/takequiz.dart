@@ -7,6 +7,7 @@ import 'Widgets/Question.dart';
 import 'Models/Quiz.dart';
 import 'Services/QuizService.dart';
 import 'dart:async';
+import 'login.dart';
 
 class TakeQuiz extends StatefulWidget{
   final String quizName;
@@ -24,6 +25,12 @@ class _TakeQuiz extends State<TakeQuiz> {
   bool selected;
   int questionNumber;
 
+  Future<LoginPage>_logOut() async{
+    await FirebaseAuth.instance.signOut().then((_){
+      Navigator.of(context).pushNamedAndRemoveUntil('/login',(Route<dynamic> route) => false);
+    });
+    return LoginPage();
+  }
 
 
   getQuestions(String name) async{
@@ -56,7 +63,11 @@ class _TakeQuiz extends State<TakeQuiz> {
     return MaterialApp(
       home: Scaffold(
         backgroundColor: Colors.blueGrey[400],
-        appBar: AppBar(title: Text('$quizName',style: TextStyle(color: Colors.white),), centerTitle: true,backgroundColor: Colors.blue[900]),
+        appBar: AppBar(title: Text('$quizName',style: TextStyle(color: Colors.white),), centerTitle: true,backgroundColor: Colors.blue[900],
+        actions: <Widget>[
+          FlatButton(onPressed: _logOut, child: IconButton(color: Colors.white,icon: Icon(Icons.exit_to_app), onPressed: ()=> _logOut()),),
+        ],
+        ),
         body: Center(
           child:Column(
           children: <Widget>[
@@ -117,6 +128,7 @@ class _TakeQuiz extends State<TakeQuiz> {
               selected?Center(child:
               RaisedButton(onPressed: (){
                 setState(() {
+                  bool_list.fillRange(0, bool_list.length,false);
                   selected=false;
                   if(questions.length<=1+questionNumber){
                     Navigator.of(context).pushNamedAndRemoveUntil('/',(Route<dynamic> route) => false);

@@ -149,9 +149,10 @@ class _Home extends State<Home> {
       bottomNavigationBar:
         Theme(data: Theme.of(context).copyWith(
           canvasColor:  Colors.blue[900],
+          textTheme: Theme.of(context).textTheme.copyWith(caption: TextStyle(color: Colors.white))
         ),
             child: BottomNavigationBar(
-              fixedColor: Colors.white,
+              fixedColor: Colors.yellow[400],
               currentIndex: currentPage,
               onTap: changePage,
               items: [

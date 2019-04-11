@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'Widgets/Question.dart';
+import 'login.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class NewQuizName extends StatefulWidget {
   @override
@@ -29,13 +31,23 @@ class _NewQuizName extends State<NewQuizName> {
     }
   }
 
+  Future<LoginPage>_logOut() async{
+    await FirebaseAuth.instance.signOut().then((_){
+      Navigator.of(context).pushNamedAndRemoveUntil('/login',(Route<dynamic> route) => false);
+    });
+    return LoginPage();
+  }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
-      appBar: AppBar(title: Text('Name for quiz'),),
-      backgroundColor: Colors.black,
+      appBar: AppBar(title: Text('Name for quiz'),centerTitle: true,backgroundColor: Colors.blue[900],
+        actions: <Widget>[
+          FlatButton(onPressed: _logOut, child: IconButton(color: Colors.white,icon: Icon(Icons.exit_to_app), onPressed: ()=> _logOut()),),
+        ],),
+      backgroundColor: Colors.blueGrey[400],
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -45,16 +57,18 @@ class _NewQuizName extends State<NewQuizName> {
           children:<Widget>[
           Center(
             child: Container(
-              color: Colors.cyan,
+              color: Colors.yellow[400],
               child: TextFormField(
                 controller: _TextEditingController,
                 validator: (val)=>val==''?val:null,
                 onSaved: (val)=>quizName=val,
-                style: TextStyle(color: Colors.white),
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.black),
+              decoration: InputDecoration(border: InputBorder.none),
             ),
           ),
           ),
-          RaisedButton(child: Text("Submit", style: TextStyle(color: Colors.white),),color: Colors.red,onPressed: (){
+          RaisedButton(child: Text("Submit", style: TextStyle(color: Colors.white),),color: Colors.black,onPressed: (){
             print('pressed button');
             submitQuizName();
             var route=MaterialPageRoute(builder: (BuildContext context) => CreateQuiz(titlequiz: _TextEditingController.text));
@@ -146,6 +160,13 @@ class _CreateQuiz extends State<CreateQuiz> {
     }
   }
 
+  Future<LoginPage>_logOut() async{
+    await FirebaseAuth.instance.signOut().then((_){
+      Navigator.of(context).pushNamedAndRemoveUntil('/login',(Route<dynamic> route) => false);
+    });
+    return LoginPage();
+  }
+
   @override
   Widget build(BuildContext context) {
 //    radioVal=-
@@ -154,7 +175,11 @@ class _CreateQuiz extends State<CreateQuiz> {
     });
     return Scaffold(
       resizeToAvoidBottomPadding: false,
-      appBar: AppBar(title: Text(nameOfQuiz+" question# "+questionNumber.toString())),
+      appBar: AppBar(title: Text(nameOfQuiz+" question# "+questionNumber.toString(),),backgroundColor: Colors.blue[900],
+        actions: <Widget>[
+          FlatButton(onPressed: _logOut, child: IconButton(color: Colors.white,icon: Icon(Icons.exit_to_app), onPressed: ()=> _logOut()),),
+        ],),
+      backgroundColor: Colors.blueGrey[400],
       body: Container(
         width: MediaQuery.of(context).size.width,
         padding: EdgeInsets.all(20.0),
@@ -195,7 +220,7 @@ class _CreateQuiz extends State<CreateQuiz> {
             TextFormField(decoration: InputDecoration(labelText: "FeedBack"),
               controller: FeedBack,
               onSaved: (val)=>quizQuestion.FeedBack=val,
-              validator: (val)=>val==''?val:null,
+              //validator: (val)=>val==''?val:null,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -257,7 +282,7 @@ class _CreateQuiz extends State<CreateQuiz> {
                 ),
                 Column(
                   children: <Widget>[
-                    Container(width: 80.0,child: RaisedButton(child: Text('NEXT'),onPressed: null),),
+                    //Container(width: 80.0,child: RaisedButton(child: Text('NEXT'),onPressed: null),),
                     Container(width: 80.0,child: radioVal==-1?Text('complete the question to add a new question'):RaisedButton(child: Text('NEXT'),onPressed: saveQuestion),)
                   ],
                 ),
