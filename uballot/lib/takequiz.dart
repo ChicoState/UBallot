@@ -60,8 +60,7 @@ class _TakeQuiz extends State<TakeQuiz> {
   }
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
+      return Scaffold(
         backgroundColor: Colors.blueGrey[400],
         appBar: AppBar(title: Text('$quizName',style: TextStyle(color: Colors.white),), centerTitle: true,backgroundColor: Colors.blue[900],
         actions: <Widget>[
@@ -144,7 +143,6 @@ class _TakeQuiz extends State<TakeQuiz> {
           ],
         ),
         ),
-      ),
     );
 
   }
