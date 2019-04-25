@@ -11,16 +11,117 @@ import 'takequiz.dart';
 import 'login.dart';
 
 
-class QuizzesFromFirebase extends StatefulWidget{
+class ClassesFromFirebase extends StatefulWidget{
   //@override
   //_QuestionsFromFirebase createState() => _QuestionsFromFirebase();
   @override
-  _QuizzesFromFirebase createState() => _QuizzesFromFirebase();
+  _ClassesFromFirebase createState() => _ClassesFromFirebase();
 }
 
+class _ClassesFromFirebase extends State<ClassesFromFirebase> {
+ QuerySnapshot getclassnames;
+  List<String> classes = [];
+
+  showClasses() async {
+   getclassnames = await Firestore.instance.collection('Quizzes').getDocuments();
+   getclassnames.documents.forEach((d){
+     setState(() {
+       classes.add(d.documentID);
+     });
+
+   });
+
+    //print(getclassnames.documents.toString());
+    //list = templist.map((DocumentSnapshot docSnapshot){
+    //  return docSnapshot.data;
+    //}).toList();
+    //classes = List<String>.from(getclassnames.documents);
+
+  }
+
+
+
+
+  Future<LoginPage>_logOut() async{
+    await FirebaseAuth.instance.signOut().then((_){
+      Navigator.of(context).pushNamedAndRemoveUntil('/login',(Route<dynamic> route) => false);
+    });
+    return LoginPage();
+  }
+
+  @override
+  void initState(){
+    //getQuizzesFromFirebase();
+    showClasses();
+
+    super.initState();
+  }
+  @override
+  Widget build(BuildContext context) {
+
+    return Scaffold(
+      backgroundColor: Colors.blueGrey[400],
+      appBar: AppBar(
+        title: Text("Choose a Class",),
+        centerTitle: true,
+        backgroundColor: Colors.blue[900],
+        actions: <Widget>[
+          FlatButton(onPressed: _logOut, child: IconButton(color: Colors.white,icon: Icon(Icons.exit_to_app), onPressed: ()=> _logOut()),),
+        ],
+      ),
+      body: new Center(
+        child: new Container(
+          child: new ListView.builder(
+              itemCount: classes.length,
+              itemBuilder: (context, index){
+                final item = classes[index];
+                return Center(
+                  child:Container(
+                    width: MediaQuery.of(context).size.width,
+                    child: RaisedButton(
+                      color: Colors.yellow[400],
+                      onPressed: () {
+                        Navigator.of(context).push(
+                            new MaterialPageRoute(
+                                builder: (context) => new QuizzesFromFirebase(className: item,)
+                            )
+                        );
+                      },child:Text(item),
+                    ),
+                    /// route to page pass in quiz name and take quiz.
+                  ),
+                );
+              }),
+        ),
+      ),
+    );
+  }
+
+}
+
+class QuizzesFromFirebase extends StatefulWidget{
+  //@override
+  //_QuestionsFromFirebase createState() => _QuestionsFromFirebase();
+  final String className;
+  QuizzesFromFirebase({Key key, this.className}) :super(key:key);
+  @override
+  _QuizzesFromFirebase createState() => _QuizzesFromFirebase(this.className);
+}
+/*
+class _ClassesFromFirebase extends State<ClassesFromFirebase>{
+  List<String> classes;
+
+  showClasses() async{
+    getnames = Firestore.instance.collection('Quizzes').
+  }
+  //_QuizzesFromFirebase createState() => _QuizzesFromFirebase();
+}
+*/
 class _QuizzesFromFirebase extends State<QuizzesFromFirebase> {
   String quizName;
   List<Quiz> quizzes;
+  String className;
+  _QuizzesFromFirebase(this.className);
   List<Map<String, Map<String, Map<String,String>>>> names = new List();
   CollectionReference collectionReference = Firestore.instance.collection(('Quizzes'));
   QuizService quizService = new QuizService();
@@ -34,7 +135,7 @@ class _QuizzesFromFirebase extends State<QuizzesFromFirebase> {
 
   showClassQuizzes() async {
     getnames = Firestore.instance.collection('Quizzes').
-    document('Class1').snapshots().listen((qs){
+    document(this.className).snapshots().listen((qs){
       if(qs.exists) {
         for(String key in qs.data['quiz'].keys) {
           setState(() {

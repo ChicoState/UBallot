@@ -103,7 +103,7 @@ class _Home extends State<Home> {
   final List<Widget> renderedWidget =[
     NewQuizName(),
     //CreateQuiz(),
-    QuizzesFromFirebase(),
+    ClassesFromFirebase(),
     test(),
   ];
 
@@ -157,8 +157,8 @@ class _Home extends State<Home> {
               onTap: changePage,
               items: [
               BottomNavigationBarItem(title: Text('Create Quiz'),icon: Icon(Icons.account_circle)),
-              BottomNavigationBarItem(title: Text('Display Quiz'),icon: Icon(Icons.image)),
-              BottomNavigationBarItem(title: Text('take quiz'),icon: Icon(Icons.image)),
+              BottomNavigationBarItem(title: Text('Take Quiz'),icon: Icon(Icons.image)),
+              BottomNavigationBarItem(title: Text('View Quiz'),icon: Icon(Icons.image)),
           ],
             ),
         ),
