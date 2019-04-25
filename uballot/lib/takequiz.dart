@@ -11,16 +11,18 @@ import 'login.dart';
 
 class TakeQuiz extends StatefulWidget{
   final String quizName;
-  TakeQuiz({Key key, this.quizName}) :super(key:key);
+  final String className;
+  TakeQuiz({Key key, this.quizName, this.className}) :super(key:key);
   @override
-  _TakeQuiz createState()=> _TakeQuiz(this.quizName);
+  _TakeQuiz createState()=> _TakeQuiz(this.quizName, this.className);
 }
 
 class _TakeQuiz extends State<TakeQuiz> {
   List<Map<String, dynamic>> questions = [];
   Question q = new Question();
   String quizName;
-   _TakeQuiz(this.quizName);
+  String className;
+   _TakeQuiz(this.quizName, this.className);
   List<bool> bool_list= [false,false,false,false,false];
   bool selected;
   int questionNumber;
@@ -35,7 +37,7 @@ class _TakeQuiz extends State<TakeQuiz> {
 
   getQuestions(String name) async{
     Firestore.instance.collection('Quizzes').
-    document('Class1').snapshots().listen((qs){
+    document(this.className).snapshots().listen((qs){
       if(qs.exists) {
         //print(qs.data['quiz'][name].map.foreach())
         for(String key in qs.data['quiz'][name].keys) {

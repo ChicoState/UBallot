@@ -12,8 +12,6 @@ import 'login.dart';
 
 
 class ClassesFromFirebase extends StatefulWidget{
-  //@override
-  //_QuestionsFromFirebase createState() => _QuestionsFromFirebase();
   @override
   _ClassesFromFirebase createState() => _ClassesFromFirebase();
 }
@@ -30,12 +28,6 @@ class _ClassesFromFirebase extends State<ClassesFromFirebase> {
      });
 
    });
-
-    //print(getclassnames.documents.toString());
-    //list = templist.map((DocumentSnapshot docSnapshot){
-    //  return docSnapshot.data;
-    //}).toList();
-    //classes = List<String>.from(getclassnames.documents);
 
   }
 
@@ -107,16 +99,7 @@ class QuizzesFromFirebase extends StatefulWidget{
   @override
   _QuizzesFromFirebase createState() => _QuizzesFromFirebase(this.className);
 }
-/*
-class _ClassesFromFirebase extends State<ClassesFromFirebase>{
-  List<String> classes;
 
-  showClasses() async{
-    getnames = Firestore.instance.collection('Quizzes').
-  }
-  //_QuizzesFromFirebase createState() => _QuizzesFromFirebase();
-}
-*/
 class _QuizzesFromFirebase extends State<QuizzesFromFirebase> {
   String quizName;
   List<Quiz> quizzes;
@@ -224,7 +207,7 @@ class _QuizzesFromFirebase extends State<QuizzesFromFirebase> {
                     onPressed: () {
                     Navigator.of(context).push(
                         new MaterialPageRoute(
-                            builder: (context) => new TakeQuiz(quizName: item,)
+                            builder: (context) => new TakeQuiz(quizName: item, className: this.className)
                         )
                     );
                   },child:Text(item),
