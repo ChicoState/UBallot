@@ -147,7 +147,7 @@ class _QuizzesFromFirebase extends State<QuizzesFromFirebase> {
 */
   getQuestions(String name) async{
     Firestore.instance.collection('Quizzes').
-    document('Class1').snapshots().listen((qs){
+    document(this.className).snapshots().listen((qs){
       if(qs.exists) {
         //print(qs.data['quiz'][name].map.foreach())
         for(String key in qs.data['quiz'][name].keys) {
@@ -226,7 +226,8 @@ class _QuizzesFromFirebase extends State<QuizzesFromFirebase> {
 
 class QuestionsFromFirebase extends StatefulWidget{
   final String titleOfQuiz;
-  QuestionsFromFirebase({Key key,this.titleOfQuiz}): super(key:key);
+  final String className;
+  QuestionsFromFirebase({Key key,this.titleOfQuiz, this.className}): super(key:key);
   @override
   _QuestionsFromFirebase createState() => _QuestionsFromFirebase();
 }
@@ -235,6 +236,7 @@ class _QuestionsFromFirebase extends State<QuestionsFromFirebase> {
 
 
   String quizName;
+  String className;
   List<Quiz> quizzes;
   List<String> names = new List();
   CollectionReference collectionReference = Firestore.instance.collection(('Quizzes'));
@@ -255,7 +257,7 @@ class _QuestionsFromFirebase extends State<QuestionsFromFirebase> {
 
   showClassQuizzes() async {
     getnames = Firestore.instance.collection('Quizzes').
-    document('Class1').snapshots().listen((qs){
+    document(this.className).snapshots().listen((qs){
       if(qs.exists) {
        // print('qs is'+qs.data['quiz']);
         for(String quiz in qs['quiz']) {

@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'object.dart';
 import 'alterdata.dart';
 import 'Widgets/Question.dart';
+import 'Widgets/Response.dart';
 import 'Models/Quiz.dart';
 import 'Services/QuizService.dart';
 import 'dart:async';
@@ -26,6 +27,10 @@ class _TakeQuiz extends State<TakeQuiz> {
   List<bool> bool_list= [false,false,false,false,false];
   bool selected;
   int questionNumber;
+  String uid;
+  Response userResponse = new Response();
+  Map<String, dynamic> map = new Map();
+  String user;
 
   Future<LoginPage>_logOut() async{
     await FirebaseAuth.instance.signOut().then((_){
@@ -39,23 +44,66 @@ class _TakeQuiz extends State<TakeQuiz> {
     Firestore.instance.collection('Quizzes').
     document(this.className).snapshots().listen((qs){
       if(qs.exists) {
-        //print(qs.data['quiz'][name].map.foreach())
         for(String key in qs.data['quiz'][name].keys) {
           setState(() {
-            //print(new Map<dynamic, dynamic>.from(qs.data['quiz'][name][key.toString()]));
             questions.add(q.questionFromJson(new Map<dynamic, dynamic>.from(qs.data['quiz'][name][key.toString()])));
           });
         }
         print(questions.toString());
-        //qs.data['quiz'][name].foreach((q) => print(q.toString()));
-        //print(qs.data['quiz'][name].map((questionNum).map((i) => q.questionFromJson(i))).toList());
       }
+    });
+  }
+  storeResponse(quizNumber, uResponse){
+    Map<String, dynamic> m = new Map();
+    m = {className: {
+      "quiz":{
+        quizName :{
+
+        }
+      }
+    }
+    };
+
+    Firestore.instance.collection(this.user)
+        .document("Classes").snapshots().listen((qs){
+          if(qs.exists) {
+            for(String key in qs.data[className]["quiz"].keys){
+              m[className]["quiz"][key.toString()] = qs.data[className]["quiz"][key.toString()];
+            }
+            if(qs.data[className]["quiz"][quizName] != null){
+              for(String key in qs.data[className]['quiz'][quizName].keys){
+                this.map[key.toString()] = qs.data[className]['quiz'][quizName][key.toString()];
+              }
+              print(this.map);
+            }
+          }
+    });
+
+    m[className]["quiz"][quizName] = this.map;
+    print(m);
+
+    final Firestore store = Firestore.instance;
+    Firestore.instance.runTransaction((transaction) async {
+      store.collection(this.user).document("Classes")
+      .setData(m)
+          .catchError((e){
+            print(e);
+      });
+    });
+
+  }
+  getFirebaseUser() async{
+    FirebaseUser _user = await FirebaseAuth.instance.currentUser();
+    setState(() {
+      this.user = _user.uid;
+      print(this.user);
     });
   }
   @override
   void initState(){
     //getQuizzesFromFirebase();
     getQuestions(this.quizName);
+    getFirebaseUser();
     selected=false;
     questionNumber=0;
     super.initState();
@@ -95,6 +143,8 @@ class _TakeQuiz extends State<TakeQuiz> {
                 setState(() {
                   selected=true;
                   bool_list=[true,false,false,false,false];
+                  userResponse.response = "A";
+                  print(userResponse.toString());
                 });
               },
               ),
@@ -103,6 +153,7 @@ class _TakeQuiz extends State<TakeQuiz> {
                 setState(() {
                   selected=true;
                   bool_list=[false,true,false,false,false];
+                  userResponse.response = "B";
 
                 });
               },),width: MediaQuery.of(context).size.width,),
@@ -110,6 +161,7 @@ class _TakeQuiz extends State<TakeQuiz> {
                 setState(() {
                   selected=true;
                   bool_list=[false,false,true,false,false];
+                  userResponse.response = "C";
                 });
               },),
               width: MediaQuery.of(context).size.width,):Container(),
@@ -117,12 +169,14 @@ class _TakeQuiz extends State<TakeQuiz> {
        setState(() {
                   selected=true;
                   bool_list=[false,false,false,true,false];
+                  userResponse.response = "D";
                 });
               },),width: MediaQuery.of(context).size.width,):Container(),
               (questions[questionNumber]['E']!="")?Container(child:RaisedButton(color:bool_list[4]?Colors.black:Colors.white,child:Text(questions[questionNumber]['E'].toString(),style: TextStyle(color: bool_list[4]?Colors.white:Colors.black),),onPressed: (){
                 setState(() {
                   selected=true;
                   bool_list=[false,false,false,false,true];
+                  userResponse.response = "E";
                 });
               },)):Container(),
 
@@ -131,7 +185,20 @@ class _TakeQuiz extends State<TakeQuiz> {
                 setState(() {
                   bool_list.fillRange(0, bool_list.length,false);
                   selected=false;
+                  userResponse.question = questions[questionNumber]['question'];
+                  userResponse.correctAnswer = questions[questionNumber]['correctAnswer'];
+                  userResponse.FeedBack = (questions[questionNumber]['FeedBack']=="")? "" : questions[questionNumber]['FeedBack'];
+                  userResponse.A = (questions[questionNumber]['A']=="")? "" : questions[questionNumber]['A'];
+                  userResponse.B = (questions[questionNumber]['B']=="")? "" : questions[questionNumber]['B'];
+                  userResponse.C = (questions[questionNumber]['C']=="")? "" : questions[questionNumber]['C'];
+                  userResponse.D = (questions[questionNumber]['D']=="")? "" : questions[questionNumber]['D'];
+                  userResponse.E = (questions[questionNumber]['E']=="")? "" : questions[questionNumber]['E'];
+                  //userResponse.quizQuestion = questionNumber.toString();
+                  //userResponse.className = this.className;
+                  //userResponse.quizName = this.quizName;
+                  map[questionNumber.toString()] = userResponse.responseToJson();
                   if(questions.length<=1+questionNumber){
+                    storeResponse(questionNumber,map);
                     Navigator.of(context).pushNamedAndRemoveUntil('/',(Route<dynamic> route) => false);
                   } else {
                     questionNumber++;
