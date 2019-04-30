@@ -30,19 +30,22 @@ class Response {
     };
   }
 
-  responseFromJson(Map<dynamic, dynamic> json, String qName, String qQuestion) {
-    return {
+  responseFromJson(Map<dynamic, dynamic> json) {
+    print(json.toString());
+    Map<dynamic, dynamic> r = {
 
-            "question":json[qName][qQuestion]['question'],
-            "A": json['A'] == null ? '' : json[qName][qQuestion]['A'],
-            "B": json['B'] == null ? '' : json[qName][qQuestion]['B'],
-            "C": json['C'] == null ? '' : json[qName][qQuestion]['C'],
-            "D": json['D'] == null ? '' : json[qName][qQuestion]['D'],
-            "E": json['E'] == null ? '' : json[qName][qQuestion]['E'],
-            "FeedBack": json['FeedBack'] == null ? '' : json[qName][qQuestion]['FeedBack'],
-            "correctAnswer": json['correctAnswer'] == null ? '' : json[qName][qQuestion]['correctAnswer'],
-            "response": json['response'] == null ? '' : json[qName][qQuestion]['response'],
+            "question":json['question'],
+            "A": json['A'] == null ? '' : json['A'],
+            "B": json['B'] == null ? '' : json['B'],
+            "C": json['C'] == null ? '' : json['C'],
+            "D": json['D'] == null ? '' : json['D'],
+            "E": json['E'] == null ? '' : json['E'],
+            "FeedBack": json['FeedBack'] == null ? '' : json['FeedBack'],
+            "correctAnswer": json['correctAnswer'] == null ? '' : json['correctAnswer'],
+            "response": json['response'] == null ? '' : json['response'],
 
     };
+    print("R: "+r.toString());
+    return r;
   }
 }

@@ -5,6 +5,7 @@ import 'package:async/async.dart';
 import 'answerquestions.dart';
 import 'login.dart';
 import 'createquiz.dart';
+import 'ViewQuiz.dart';
 
 class test extends StatefulWidget {
   @override
@@ -102,9 +103,8 @@ class _Home extends State<Home> {
 
   final List<Widget> renderedWidget =[
     NewQuizName(),
-    //CreateQuiz(),
     ClassesFromFirebase(),
-    test(),
+    ViewQuiz(),
   ];
 
   changePage(int index){
