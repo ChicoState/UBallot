@@ -259,8 +259,7 @@ class _ViewQuestions extends State<ViewQuestions> {
             print("question: "+r.toString());
             questions.add(r);
             print("question: "+r.question);
-            m.add(qs.data[className]["quiz"][quizName][key.toString()]);
-            print(m[0]["question"].toString());
+            //print(m[0]["question"].toString());
             index++;
           });
 
