@@ -121,6 +121,8 @@ class SelectQuiz extends StatefulWidget{
 class _SelectQuiz extends State<SelectQuiz> {
 String userName;
 String className;
+List <String> score = new List();
+List <String> total = new List();
 _SelectQuiz(this.userName, this.className);
 List<String> quizNames = new List();
 
@@ -131,18 +133,43 @@ getQuizzes() async{
     Firestore.instance.collection(this.userName)
         .document("Classes").snapshots().listen((qs){
       if(qs.exists){
+        int index = 0;
         for(String key in qs.data[className]["quiz"].keys){
           setState(() {
             quizNames.add(key.toString());
-          });
+            score.add("0");
+            total.add("0");
+            int t = 0;
+            int s = 0;
+            for(String k in qs.data[className]["quiz"][quizNames[index]].keys) {
+              print(qs.data[className]["quiz"][quizNames[index]][k.toUpperCase()]);
+              if(qs.data[className]["quiz"][quizNames[index]][k.toUpperCase()]["response"] ==
+                  qs.data[className]["quiz"][quizNames[index]][k.toUpperCase()]["correctAnswer"]){
+                s++;
+              }
+              t++;
+              print(s.toString()+ " "+t.toString());
+            }
+            score[index] = s.toString();
+            total[index] = t.toString();
+            index++;
 
-          print(key.toString());
+          });
+          print("KEEEEEEEY: "+ key.toString());
         }
       }
+
     });
   });
 
   //print(this.quizNames);
+}
+
+getColor(score, total){
+  if(double.parse(score)/double.parse(total) >= .7){
+    return Colors.green;
+  }
+  return Colors.redAccent;
 }
 
 Future<LoginPage>_logOut() async{
@@ -181,14 +208,14 @@ Widget build(BuildContext context) {
                 child:Container(
                   width: MediaQuery.of(context).size.width,
                   child: RaisedButton(
-                    color: Colors.yellow[400],
+                    color: getColor(score[index], total[index]),//Colors.yellow[400],
                     onPressed: () {
                       Navigator.of(context).push(
                           new MaterialPageRoute(
                               builder: (context) => new ViewQuestions(userName: this.userName, className: this.className,  quizName: item,)
                           )
                       );
-                    },child:Text(item),
+                    },child:Text(item + " " + score[index] +"/"+ total[index] ),
                   ),
                   /// route to page pass in quiz name and take quiz.
                 ),
@@ -224,15 +251,17 @@ class _ViewQuestions extends State<ViewQuestions> {
     Firestore.instance.collection(this.userName)
         .document("Classes").snapshots().listen((qs){
       if(qs.exists){
+        int index = 0;
         for(String key in qs.data[className]["quiz"][quizName].keys){
           setState(() {
-            //print(qs.data[className]["quiz"][quizName][key.toString()]);
+            m.add(qs.data[className]["quiz"][quizName][key.toString()]);
             r.responseFromJson(new Map<dynamic, dynamic>.from(qs.data[className]["quiz"][quizName][key.toString()]));
             print("question: "+r.toString());
             questions.add(r);
             print("question: "+r.question);
             m.add(qs.data[className]["quiz"][quizName][key.toString()]);
             print(m[0]["question"].toString());
+            index++;
           });
 
         }
@@ -272,9 +301,9 @@ class _ViewQuestions extends State<ViewQuestions> {
       body: new Center(
         child: new Container(
           child: new ListView.builder(
-              itemCount: questions.length,
+              itemCount: m.length,
               itemBuilder: (context, index){
-                final item = questions[index];
+                final item = m[index];
                 return Center(
                   child:Container(
                     width: MediaQuery.of(context).size.width,
@@ -286,7 +315,7 @@ class _ViewQuestions extends State<ViewQuestions> {
                                 //builder: (context) => new QuizzesFromFirebase(className: item,)
                             )
                         );
-                      },child:Text(item.question.toString()),
+                      },child:Text(item['question'].toString()),
                     ),
                     /// route to page pass in quiz name and take quiz.
                   ),
