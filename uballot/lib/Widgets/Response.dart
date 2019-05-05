@@ -31,7 +31,7 @@ class Response {
   }
 
   responseFromJson(Map<dynamic, dynamic> json) {
-    print(json.toString());
+    //print(json.toString());
     Map<dynamic, dynamic> r = {
 
             "question":json['question'],
@@ -45,7 +45,7 @@ class Response {
             "response": json['response'] == null ? '' : json['response'],
 
     };
-    print("R: "+r.toString());
+    //print("R: "+r.toString());
     return r;
   }
 }

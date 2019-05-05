@@ -271,6 +271,13 @@ class _ViewQuestions extends State<ViewQuestions> {
 
   }
 
+  getColor(item){
+    if(item['correctAnswer'] == item['response']){
+      return Colors.green;
+    }
+    return Colors.redAccent;
+  }
+
   Future<LoginPage>_logOut() async{
     await FirebaseAuth.instance.signOut().then((_){
       Navigator.of(context).pushNamedAndRemoveUntil('/login',(Route<dynamic> route) => false);
@@ -307,7 +314,7 @@ class _ViewQuestions extends State<ViewQuestions> {
                   child:Container(
                     width: MediaQuery.of(context).size.width,
                     child: RaisedButton(
-                      color: Colors.yellow[400],
+                      color: getColor(item),
                       onPressed: () {
                         Navigator.of(context).push(
                             new MaterialPageRoute(
