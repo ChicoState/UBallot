@@ -1,13 +1,8 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'object.dart';
-import 'alterdata.dart';
-import 'Widgets/Question.dart';
 import 'Widgets/Response.dart';
-import 'Models/Quiz.dart';
-import 'Services/QuizService.dart';
-import 'dart:async';
 import 'login.dart';
 
 class ViewQuiz extends StatefulWidget{
@@ -35,8 +30,8 @@ class _ViewQuiz extends State<ViewQuiz> {
   getClasses() async{
   //  if(this.user != null) {
     //setState(() {
-      await Firestore.instance.collection(this.user)
-          .document("Classes").snapshots().listen((qs) {
+       Firestore.instance.collection(this.user)
+          .document('Classes').snapshots().listen((qs) {
         if (qs.exists) {
           for (String key in qs.data.keys) {
             setState(() {
@@ -69,11 +64,11 @@ class _ViewQuiz extends State<ViewQuiz> {
 
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
+  Widget build(BuildContext context) =>
+    Scaffold(
       backgroundColor: Colors.blueGrey[400],
       appBar: AppBar(
-        title: Text("Choose a Class",),
+        title: Text('Choose a Class',),
         centerTitle: true,
         backgroundColor: Colors.blue[900],
         actions: <Widget>[
@@ -107,7 +102,6 @@ class _ViewQuiz extends State<ViewQuiz> {
       ),
     );
   }
-}
 
 class SelectQuiz extends StatefulWidget{
   final String userName;
@@ -131,31 +125,31 @@ getQuizzes() async{
   print(this.className);
   setState(() {
     Firestore.instance.collection(this.userName)
-        .document("Classes").snapshots().listen((qs){
+        .document('Classes').snapshots().listen((qs){
       if(qs.exists){
         int index = 0;
-        for(String key in qs.data[className]["quiz"].keys){
+        for(String key in qs.data[className]['quiz'].keys){
           setState(() {
             quizNames.add(key.toString());
-            score.add("0");
-            total.add("0");
+            score.add('0');
+            total.add('0');
             int t = 0;
             int s = 0;
-            for(String k in qs.data[className]["quiz"][quizNames[index]].keys) {
-              print(qs.data[className]["quiz"][quizNames[index]][k.toUpperCase()]);
-              if(qs.data[className]["quiz"][quizNames[index]][k.toUpperCase()]["response"] ==
-                  qs.data[className]["quiz"][quizNames[index]][k.toUpperCase()]["correctAnswer"]){
+            for(String k in qs.data[className]['quiz'][quizNames[index]].keys) {
+              print(qs.data[className]['quiz'][quizNames[index]][k.toUpperCase()]);
+              if(qs.data[className]['quiz'][quizNames[index]][k.toUpperCase()]['response'] ==
+                  qs.data[className]['quiz'][quizNames[index]][k.toUpperCase()]['correctAnswer']){
                 s++;
               }
               t++;
-              print(s.toString()+ " "+t.toString());
+              print(s.toString()+ ' '+t.toString());
             }
             score[index] = s.toString();
             total[index] = t.toString();
             index++;
 
           });
-          print("KEEEEEEEY: "+ key.toString());
+          print('KEEEEEEEY: '+ key.toString());
         }
       }
 
@@ -191,7 +185,7 @@ Widget build(BuildContext context) {
   return Scaffold(
     backgroundColor: Colors.blueGrey[400],
     appBar: AppBar(
-      title: Text("Choose a Quiz",),
+      title: Text('Choose a Quiz',),
       centerTitle: true,
       backgroundColor: Colors.blue[900],
       actions: <Widget>[
@@ -215,7 +209,7 @@ Widget build(BuildContext context) {
                               builder: (context) => new ViewQuestions(userName: this.userName, className: this.className,  quizName: item,)
                           )
                       );
-                    },child:Text(item + " " + score[index] +"/"+ total[index] ),
+                    },child:Text(item + ' ' + score[index] +'/'+ total[index] ),
                   ),
                   /// route to page pass in quiz name and take quiz.
                 ),
@@ -249,22 +243,22 @@ class _ViewQuestions extends State<ViewQuestions> {
   getQuestions() async {
 
     Firestore.instance.collection(this.userName)
-        .document("Classes").snapshots().listen((qs){
+        .document('Classes').snapshots().listen((qs){
       if(qs.exists){
-        int index = 0;
-        for(String key in qs.data[className]["quiz"][quizName].keys){
+        //int index = 0;
+        for(String key in qs.data[className]['quiz'][quizName].keys){
           setState(() {
-            m.add(qs.data[className]["quiz"][quizName][key.toString()]);
-            r.responseFromJson(new Map<dynamic, dynamic>.from(qs.data[className]["quiz"][quizName][key.toString()]));
-            print("question: "+r.toString());
+            m.add(qs.data[className]['quiz'][quizName][key.toString()]);
+            r.responseFromJson(new Map<dynamic, dynamic>.from(qs.data[className]['quiz'][quizName][key.toString()]));
+            print('question: '+r.toString());
             questions.add(r);
-            print("question: "+r.question);
+            print('question: '+r.question);
             //print(m[0]["question"].toString());
-            index++;
+            //index++;
           });
 
         }
-        print("-----QUESTIONS------");
+        print('-----QUESTIONS------');
         print(this.questions.toString());
       }
     });
@@ -292,9 +286,9 @@ class _ViewQuestions extends State<ViewQuestions> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) =>
     //print(this.questions);
-    return Scaffold(
+    Scaffold(
       backgroundColor: Colors.blueGrey[400],
       appBar: AppBar(
         title: Text(quizName,),
@@ -316,11 +310,11 @@ class _ViewQuestions extends State<ViewQuestions> {
                     child: RaisedButton(
                       color: getColor(item),
                       onPressed: () {
-                        Navigator.of(context).push(
-                            new MaterialPageRoute(
+                        //Navigator.of(context).push(
+                            //new MaterialPageRoute(
                                 //builder: (context) => new QuizzesFromFirebase(className: item,)
-                            )
-                        );
+                            //)
+                        //);
                       },child:Text(item['question'].toString()),
                     ),
                     /// route to page pass in quiz name and take quiz.
@@ -331,5 +325,3 @@ class _ViewQuestions extends State<ViewQuestions> {
       ),
     );
   }
-
-}

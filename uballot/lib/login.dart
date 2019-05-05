@@ -1,6 +1,6 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'dart:async';
 import 'main.dart';
 
 /*
@@ -118,14 +118,14 @@ class _LoginPageState extends State<LoginPage>{
       return [
         new TextFormField(
           decoration: new InputDecoration(
-              labelText: "email"
+              labelText: 'email'
           ),
           onSaved: (val) => credentials.email = val,
           validator: (val) => val == '' ? val : null,
         ),
         new TextFormField(
           decoration: new InputDecoration(
-            labelText: "password",
+            labelText: 'password',
           ),
           obscureText: true,
           onSaved: (val) => credentials.password = val,
@@ -136,22 +136,22 @@ class _LoginPageState extends State<LoginPage>{
       return [
         new TextFormField(
           decoration: new InputDecoration(
-              labelText: "email"
+              labelText: 'email'
           ),
           onSaved: (val) => credentials.email = val,
           validator: (val) => val == '' ? val : null,
         ),
         new TextFormField(
             decoration: new InputDecoration(
-            labelText: "password",
+            labelText: 'password',
           ),
           obscureText: true,
           onSaved: (val) => credentials.password = val,
           validator: (val) => val == '' ? val : null,
         ),
-        new TextFormField(
+       /* new TextFormField(
           decoration: new InputDecoration(
-            labelText: "re-enter password",
+            labelText: 're-enter password',
           ),
           onSaved: (val) => val,
           validator: (val) {
@@ -160,7 +160,7 @@ class _LoginPageState extends State<LoginPage>{
             }
           },
           obscureText: true,
-        ),
+        ),*/
       ];
     }
   }
