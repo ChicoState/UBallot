@@ -6,16 +6,7 @@ import 'createquiz.dart';
 import 'object.dart';
 import 'alterdata.dart';
 import 'login.dart';
-//import 'package:flutter/services.dart';
-//import 'dart:io';
 
-
-/*
-https://tphangout.com/flutter-firestore-crud-updating-deleting-data/
-https://flutter.io/docs/catalog/samples/expansion-tile-sample
-https://stackoverflow.com/questions/49869873/flutter-update-widgets-on-resume
-https://stackoverflow.com/questions/50863681/flutter-how-do-i-toggle-the-color-of-a-raisedbutton-upon-click
- */
 
 void main() {
   runApp(UBallot());
@@ -36,13 +27,6 @@ class UBallot extends StatelessWidget {
   }
 }
 
-
-
-
-
-//void main() => runApp(new MaterialApp(
-//    home: new Home()),
-//);
 
 class MyApp extends StatefulWidget{
   final String user;
@@ -111,9 +95,6 @@ class _MyApp extends State<MyApp> {
                   onPressed: (){
                     setState(()=>bool_list=[false,true,false,false]);
                     please.answer='B';
-                   // please.uid=user;
-                  //  quiz.updateData('Answers_to_quiz', please.toJson());
-                  //  quiz.addData(please.toJson());
                   },
                 ),
                 RaisedButton(
@@ -125,12 +106,6 @@ class _MyApp extends State<MyApp> {
                     setState(()=>bool_list=[false,false,true,false]);
 
                     please.answer='C';
-                    //please.uid=user;
-
-
-                  //quiz.do_something(please.uid,please.toJson());
-                  //  quiz.updateData('Answers_to_quiz', please.toJson());
-                  //  quiz.addData(please.toJson());
                   },
                 ),
                 RaisedButton(
@@ -157,8 +132,7 @@ class _MyApp extends State<MyApp> {
                       bool_list=[false,false,false,false];
                       MyApp();
                     });
-                    //Navigator.push(context,
-                      //  MaterialPageRoute(builder: (context) => new MyApp()));
+
                   }
                 ),
               ],
@@ -171,26 +145,3 @@ class _MyApp extends State<MyApp> {
   }
 }
 
-/*
-handleAppLifecycleState() {
-  AppLifecycleState _lastLifecyleState;
-  SystemChannels.lifecycle.setMessageHandler((msg) {
-    print('SystemChannels> $msg');
-    switch (msg) {
-      case "AppLifecycleState.paused":
-        _lastLifecyleState = AppLifecycleState.paused;
-        break;
-      case "AppLifecycleState.inactive":
-        _lastLifecyleState = AppLifecycleState.inactive;
-        break;
-      case "AppLifecycleState.resumed":
-        _lastLifecyleState = AppLifecycleState.resumed;
-        break;
-      case "AppLifecycleState.suspending":
-        _lastLifecyleState = AppLifecycleState.suspending;
-        break;
-      default:
-    }
-  });
-}
-*/
