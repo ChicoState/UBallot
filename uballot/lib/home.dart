@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:async/async.dart';
-import 'answerquestions.dart';
-import 'login.dart';
-import 'createquiz.dart';
 import 'ViewQuiz.dart';
+import 'answerquestions.dart';
+import 'createquiz.dart';
+import 'login.dart';
 
-class test extends StatefulWidget {
+class Test extends StatefulWidget {
   @override
-  _test createState() => _test();
+  _Test createState() => _Test();
 }
 
-class _test extends State<test> {
+class _Test extends State<Test> {
   FirebaseUser user;
   DocumentSnapshot ss;
   DocumentSnapshot wow;
@@ -34,7 +33,7 @@ sad() async {
       data) {
     data.documents.forEach((document) {
     //  print(document.data['boolean'].path);
-      var stuff= document.data['boolean'].path.split('/');
+      //var stuff= document.data['boolean'].path.split('/');
 
       setState(() {
      //   print(stuff[1]);
