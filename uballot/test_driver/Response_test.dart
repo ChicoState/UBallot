@@ -13,7 +13,7 @@ void main() {
     response.E = '2';
     response.FeedBack = '(1+1) + (1+1) = 4';
     response.correctAnswer = 'B';
-    response.correctAnswer = 'B';
+    response.response = 'B';
 
     var json = response.responseToJson();
 
@@ -56,6 +56,7 @@ void main() {
     expect(r['E'], json['E'] );
     expect(r['FeedBack'], json['FeedBack'] );
     expect(r['correctAnswer'], json['correctAnswer'] );
+    expect(r['response'], json['response'] );
 
   });
 }

@@ -1,4 +1,4 @@
-//to run:  flutter test test_driver/questionTest.dart
+//to run:  flutter test test_driver/question_test.dart
 import 'package:test/test.dart';
 import 'package:uballot/Widgets/Question.dart';
 
