@@ -48,7 +48,7 @@ runTests () {
     if grep flutter pubspec.yaml > /dev/null; then
       echo "run flutter tests"
       if [ -f "test/all_tests.dart" ]; then
-        flutter test --coverage test_driver/home_test.dart || error=true
+        flutter test --coverage test_driver/* || error=true
       else
         flutter test --coverage || error=true
       fi
