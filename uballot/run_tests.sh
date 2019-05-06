@@ -1,5 +1,14 @@
 #!/usr/bin/env bash
 
+## GENERATE LCOV
+ # flutter test --coverage test_driver/*
+ # genhtml coverage/lcov.info
+
+## RUN ALL TESTS
+ # flutter test test_driver/
+
+
+
 # remember some failed commands and report on exit
 error=false
 
