@@ -15,7 +15,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
   cloud_firestore: "0.9.0"
+
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -35,12 +37,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_driver:
-    sdk: flutter
   test: ^1.5.1
   mockito: ^4.0.0
-  test_coverage: ^0.2.0
-
 
 
 # For information on the generic Dart part of this file, see the
@@ -48,6 +46,8 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
 flutter:
+  assets:
+    - assets/UBallots.png
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
