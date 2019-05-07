@@ -1,10 +1,15 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'object.dart';
+import 'alterdata.dart';
 import 'Widgets/Question.dart';
-import 'login.dart';
+import 'Models/Quiz.dart';
+import 'Services/QuizService.dart';
+import 'dart:async';
 import 'takequiz.dart';
+import 'login.dart';
+
 
 class ClassesFromFirebase extends StatefulWidget{
   @override
@@ -44,13 +49,12 @@ class _ClassesFromFirebase extends State<ClassesFromFirebase> {
     super.initState();
   }
   @override
-  Widget build(BuildContext context) =>
-    Scaffold(
-      backgroundColor: Colors.blueGrey[400],
+  Widget build(BuildContext context) {
+
+    return Scaffold(
       appBar: AppBar(
-        title: Text('Choose a Class',),
+        title: Text("Choose a Class",),
         centerTitle: true,
-        backgroundColor: Colors.blue[900],
         actions: <Widget>[
           FlatButton(onPressed: _logOut, child: IconButton(color: Colors.white,icon: Icon(Icons.exit_to_app), onPressed: ()=> _logOut()),),
         ],
@@ -65,7 +69,6 @@ class _ClassesFromFirebase extends State<ClassesFromFirebase> {
                   child:Container(
                     width: MediaQuery.of(context).size.width,
                     child: RaisedButton(
-                      color: Colors.yellow[400],
                       onPressed: () {
                         Navigator.of(context).push(
                             new MaterialPageRoute(
@@ -83,6 +86,8 @@ class _ClassesFromFirebase extends State<ClassesFromFirebase> {
     );
   }
 
+}
+
 class QuizzesFromFirebase extends StatefulWidget{
   //@override
   //_QuestionsFromFirebase createState() => _QuestionsFromFirebase();
@@ -94,10 +99,12 @@ class QuizzesFromFirebase extends StatefulWidget{
 
 class _QuizzesFromFirebase extends State<QuizzesFromFirebase> {
   String quizName;
+  List<Quiz> quizzes;
   String className;
   _QuizzesFromFirebase(this.className);
   List<Map<String, Map<String, Map<String,String>>>> names = new List();
   CollectionReference collectionReference = Firestore.instance.collection(('Quizzes'));
+  QuizService quizService = new QuizService();
   StreamSubscription<QuerySnapshot> quizStream;
   List<String> quizList= [] ;
   List<Map<String, dynamic>> questions = [];
@@ -119,6 +126,22 @@ class _QuizzesFromFirebase extends State<QuizzesFromFirebase> {
     });
   }
 
+/*
+  getQuizzesFromFirebase() async {
+    quizzes = new List();
+    quizStream = quizService.getQuiz().listen((QuerySnapshot qs){
+      final List<Quiz> q = qs.documents.map((docSnap) =>
+        Quiz.fromMap(docSnap.data)).toList();
+
+      setState(() {
+        this.quizzes = q;
+        this.names = this.quizzes[0].quizzes;
+        print("----------------");
+        print(this.names.toString());
+      });
+      });
+  }
+*/
   getQuestions(String name) async{
     Firestore.instance.collection('Quizzes').
     document(this.className).snapshots().listen((qs){
@@ -155,21 +178,19 @@ class _QuizzesFromFirebase extends State<QuizzesFromFirebase> {
     super.initState();
   }
   @override
-  Widget build(BuildContext context) =>
+  Widget build(BuildContext context) {
 
-    Scaffold(
-      backgroundColor: Colors.blueGrey[400],
-      appBar: AppBar(
-        title: Text('Choose a Quiz',),
-        centerTitle: true,
-        backgroundColor: Colors.blue[900],
-        actions: <Widget>[
-          FlatButton(onPressed: _logOut, child: IconButton(color: Colors.white,icon: Icon(Icons.exit_to_app), onPressed: ()=> _logOut()),),
-        ],
-      ),
-      body: new Center(
-        child: new Container(
-          child: new ListView.builder(
+    return Scaffold(
+          appBar: AppBar(
+            title: Text("Choose a Quiz",),
+            centerTitle: true,
+            actions: <Widget>[
+              FlatButton(onPressed: _logOut, child: IconButton(color: Colors.white,icon: Icon(Icons.exit_to_app), onPressed: ()=> _logOut()),),
+            ],
+          ),
+          body: new Center(
+            child: new Container(
+            child: new ListView.builder(
               itemCount: quizList.length,
               itemBuilder: (context, index){
                 final item = quizList[index];
@@ -194,6 +215,7 @@ class _QuizzesFromFirebase extends State<QuizzesFromFirebase> {
           ),
     );
   }
+}
 
 
 
@@ -210,8 +232,10 @@ class _QuestionsFromFirebase extends State<QuestionsFromFirebase> {
 
   String quizName;
   String className;
+  List<Quiz> quizzes;
   List<String> names = new List();
   CollectionReference collectionReference = Firestore.instance.collection(('Quizzes'));
+  QuizService quizService = new QuizService();
   StreamSubscription<QuerySnapshot> quizStream;
   DocumentSnapshot ds;
   String name;
@@ -230,6 +254,7 @@ class _QuestionsFromFirebase extends State<QuestionsFromFirebase> {
     getnames = Firestore.instance.collection('Quizzes').
     document(this.className).snapshots().listen((qs){
       if(qs.exists) {
+       // print('qs is'+qs.data['quiz']);
         for(String quiz in qs['quiz']) {
           print(quiz);
         }
@@ -242,6 +267,7 @@ class _QuestionsFromFirebase extends State<QuestionsFromFirebase> {
 
 
   getQuizzesFromFirebase() async {
+    quizzes = new List();
     DocumentReference document=Firestore.instance.collection('Quizzes').document('Class1');
     document.get().then((doc){
       if (doc.exists){
