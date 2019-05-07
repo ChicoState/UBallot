@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'Widgets/Question.dart';
 import 'login.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class NewQuizName extends StatefulWidget {
   @override
@@ -14,7 +14,7 @@ class NewQuizName extends StatefulWidget {
 class _NewQuizName extends State<NewQuizName> {
   String quizName;
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
-  final _TextEditingController= TextEditingController();
+  var _TextEditingController= TextEditingController();
 
   submitQuizName(){
     final key = _formKey.currentState;
@@ -40,14 +40,13 @@ class _NewQuizName extends State<NewQuizName> {
 
 
   @override
-  Widget build(BuildContext context) =>
-    Scaffold(
+  Widget build(BuildContext context) {
+    return Scaffold(
       resizeToAvoidBottomPadding: false,
-      appBar: AppBar(title: Text('Name for quiz'),centerTitle: true,backgroundColor: Colors.blue[900],
+      appBar: AppBar(title: Image.asset('assets/UBallots.png',scale: .4,),centerTitle: true,
         actions: <Widget>[
           FlatButton(onPressed: _logOut, child: IconButton(color: Colors.white,icon: Icon(Icons.exit_to_app), onPressed: ()=> _logOut()),),
         ],),
-      backgroundColor: Colors.blueGrey[400],
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -57,7 +56,7 @@ class _NewQuizName extends State<NewQuizName> {
           children:<Widget>[
           Center(
             child: Container(
-              color: Colors.yellow[400],
+              color: Colors.grey,
               child: TextFormField(
                 controller: _TextEditingController,
                 validator: (val)=>val==''?val:null,
@@ -68,11 +67,12 @@ class _NewQuizName extends State<NewQuizName> {
             ),
           ),
           ),
-          RaisedButton(child: Text('Submit', style: TextStyle(color: Colors.white),),color: Colors.black,onPressed: (){
+          RaisedButton(child: Text("Submit", style: TextStyle(color: Colors.white),),color: Colors.black,onPressed: (){
             print('pressed button');
             submitQuizName();
             var route=MaterialPageRoute(builder: (BuildContext context) => CreateQuiz(titlequiz: _TextEditingController.text));
             Navigator.of(context).push(route);
+           // Navigator.pushNamed(context,'/createquiz',);
           }),
           ],
     ),
@@ -81,7 +81,7 @@ class _NewQuizName extends State<NewQuizName> {
       ),
     );
   }
-
+}
 
 
 
@@ -114,7 +114,6 @@ class _CreateQuiz extends State<CreateQuiz> {
 
   @override
   void initState(){
-    super.initState();
     questionNumber=1;
   }
 
@@ -175,7 +174,7 @@ class _CreateQuiz extends State<CreateQuiz> {
     });
     return Scaffold(
       resizeToAvoidBottomPadding: false,
-      appBar: AppBar(title: Text(nameOfQuiz+' question# '+questionNumber.toString(),),backgroundColor: Colors.blue[900],
+      appBar: AppBar(title: Text(nameOfQuiz+" question# "+questionNumber.toString(),),
         actions: <Widget>[
           FlatButton(onPressed: _logOut, child: IconButton(color: Colors.white,icon: Icon(Icons.exit_to_app), onPressed: ()=> _logOut()),),
         ],),
@@ -187,37 +186,37 @@ class _CreateQuiz extends State<CreateQuiz> {
           key: _formKey,
           child: ListView(
           children: <Widget>[
-            TextFormField(decoration: InputDecoration(labelText: 'question'),
+            TextFormField(decoration: InputDecoration(labelText: "question"),
               controller: QUESTION,
               onSaved: (val)=>quizQuestion.question=val,
               validator: (val)=>val==''?val:null,
             ),
-            TextFormField(decoration: InputDecoration(labelText: 'A',fillColor: Colors.green,filled: filled[0]),
+            TextFormField(decoration: InputDecoration(labelText: "A",fillColor: Colors.green,filled: filled[0]),
               controller: A,
               onSaved: (val)=>quizQuestion.A=val,
               validator: (val)=>val==''?val:null,
             ),
-            TextFormField(decoration: InputDecoration(labelText: 'B',fillColor: Colors.yellow,filled: filled[1]),
+            TextFormField(decoration: InputDecoration(labelText: "B",fillColor: Colors.yellow,filled: filled[1]),
               controller: B,
               onSaved: (val)=>quizQuestion.B=val,
               validator: (val)=>val==''?val:null,
             ),
-            TextFormField(decoration: InputDecoration(labelText: 'C',fillColor: Colors.blue,filled: filled[2]),
+            TextFormField(decoration: InputDecoration(labelText: "C",fillColor: Colors.blue,filled: filled[2]),
               controller: C,
               onSaved: (val)=>quizQuestion.C=val,
              // validator: (val)=>val==''?val:null,
             ),
-            TextFormField(decoration: InputDecoration(labelText: 'D',fillColor: Colors.pink,filled: filled[3]),
+            TextFormField(decoration: InputDecoration(labelText: "D",fillColor: Colors.pink,filled: filled[3]),
               controller: D,
               onSaved: (val)=>quizQuestion.D=val,
               //validator: (val)=>val==''?val:null,
             ),
-            TextFormField(decoration: InputDecoration(labelText: 'E',fillColor: Colors.orange,filled: filled[4]),
+            TextFormField(decoration: InputDecoration(labelText: "E",fillColor: Colors.orange,filled: filled[4]),
               controller: E,
               onSaved: (val)=>quizQuestion.E=val,
               //validator: (val)=>val==''?val:null,
             ),
-            TextFormField(decoration: InputDecoration(labelText: 'FeedBack'),
+            TextFormField(decoration: InputDecoration(labelText: "FeedBack"),
               controller: FeedBack,
               onSaved: (val)=>quizQuestion.FeedBack=val,
               //validator: (val)=>val==''?val:null,
