@@ -62,8 +62,7 @@ class _ViewQuiz extends State<ViewQuiz> {
     Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('Choose a Class',),
-        centerTitle: true,
+        title: Image.asset('assets/UBallots.png',scale: .4,),centerTitle: true,
         backgroundColor: Colors.blue,
         actions: <Widget>[
           FlatButton(onPressed: _logOut, child: IconButton(color: Colors.white,icon: Icon(Icons.exit_to_app), onPressed: ()=> _logOut()),),

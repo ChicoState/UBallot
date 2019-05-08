@@ -171,7 +171,7 @@ class _TakeQuiz extends State<TakeQuiz> {
               (questions[questionNumber]['E']!='')?Container(child:RaisedButton(color:bool_list[3]?Colors.black:Colors.white,child:Text(questions[questionNumber]['E'].toString(),style: TextStyle(color: bool_list[4]?Colors.white:Colors.black),),onPressed: (){
                 setState(() {
                   selected=true;
-                  bool_list=[false,false,false,true,false];
+                  bool_list=[false,false,false,false,true];
                   userResponse.response = 'E';
                 });
               },),width: MediaQuery.of(context).size.width,):Container(),
