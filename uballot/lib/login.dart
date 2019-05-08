@@ -97,9 +97,7 @@ class _LoginPageState extends State<LoginPage>{
 
     return new Scaffold(
       resizeToAvoidBottomPadding: false,
-      appBar: new AppBar(
-        title: new Image.asset('UBallots.png', fit: BoxFit.cover), // new Text('Account'),
-      ),
+        appBar: AppBar(title: Image.asset('assets/UBallots.png',scale: .4,),centerTitle: true,),
       body: new Container(
         width: screenSize.width,
         padding: new EdgeInsets.all(20.0),

@@ -161,20 +161,20 @@ class _TakeQuiz extends State<TakeQuiz> {
                 });
               },),
               width: MediaQuery.of(context).size.width,):Container(),
-    (questions[questionNumber]['D']!='')?Container(child:RaisedButton(color:bool_list[3]?Colors.black:Colors.white,child:Text(questions[questionNumber]['D'].toString(),style: TextStyle(color: bool_list[3]?Colors.white:Colors.black),),onPressed: (){
-       setState(() {
+            (questions[questionNumber]['D']!='')?Container(child:RaisedButton(color:bool_list[3]?Colors.black:Colors.white,child:Text(questions[questionNumber]['D'].toString(),style: TextStyle(color: bool_list[3]?Colors.white:Colors.black),),onPressed: (){
+            setState(() {
                   selected=true;
                   bool_list=[false,false,false,true,false];
                   userResponse.response = 'D';
                 });
               },),width: MediaQuery.of(context).size.width,):Container(),
-              (questions[questionNumber]['E']!='')?Container(child:RaisedButton(color:bool_list[4]?Colors.black:Colors.white,child:Text(questions[questionNumber]['E'].toString(),style: TextStyle(color: bool_list[4]?Colors.white:Colors.black),),onPressed: (){
+              (questions[questionNumber]['E']!='')?Container(child:RaisedButton(color:bool_list[3]?Colors.black:Colors.white,child:Text(questions[questionNumber]['E'].toString(),style: TextStyle(color: bool_list[4]?Colors.white:Colors.black),),onPressed: (){
                 setState(() {
                   selected=true;
-                  bool_list=[false,false,false,false,true];
+                  bool_list=[false,false,false,true,false];
                   userResponse.response = 'E';
                 });
-              },)):Container(),
+              },),width: MediaQuery.of(context).size.width,):Container(),
 
               selected?Center(child:
               RaisedButton(onPressed: (){
