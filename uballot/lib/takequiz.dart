@@ -108,7 +108,7 @@ class _TakeQuiz extends State<TakeQuiz> {
   Widget build(BuildContext context) =>
       Scaffold(
         backgroundColor: Colors.blueGrey[400],
-        appBar: AppBar(title: Text('$quizName',style: TextStyle(color: Colors.white),), centerTitle: true,backgroundColor: Colors.blue[900],
+        appBar: AppBar(title: Text('$quizName',style: TextStyle(color: Colors.white),), centerTitle: true,backgroundColor: Colors.blue,
         actions: <Widget>[
           FlatButton(onPressed: _logOut, child: IconButton(color: Colors.white,icon: Icon(Icons.exit_to_app), onPressed: ()=> _logOut()),),
         ],

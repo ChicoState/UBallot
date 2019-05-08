@@ -114,6 +114,7 @@ class _CreateQuiz extends State<CreateQuiz> {
 
   @override
   void initState(){
+    super.initState();
     questionNumber=1;
   }
 
@@ -175,6 +176,7 @@ class _CreateQuiz extends State<CreateQuiz> {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(title: Text(nameOfQuiz+" question# "+questionNumber.toString(),),
+        backgroundColor: Colors.blue,
         actions: <Widget>[
           FlatButton(onPressed: _logOut, child: IconButton(color: Colors.white,icon: Icon(Icons.exit_to_app), onPressed: ()=> _logOut()),),
         ],),

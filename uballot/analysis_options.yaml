@@ -1,4 +1,11 @@
-#To run on command line: dartanalyzer --options analysis_options.yaml .
+# https://github.com/flutter/flutter/blob/master/packages/flutter/lib/analysis_options_user.yaml
+# To run on command line: dartanalyzer --options analysis_options.yaml .
+
+analyzer:
+  errors:
+    # treat missing required parameters as a warning (not a hint)
+    missing_required_param: warning
+
 linter:
   rules:
   #    - always_declare_return_types
@@ -126,4 +133,4 @@ linter:
   - use_string_buffers
   - use_to_and_as_if_applicable
   - valid_regexps
-#    - void_checks # under review (see #1068)
+  #- void_checks # under review (see #1068)

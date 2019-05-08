@@ -65,7 +65,7 @@ class _Home extends State<Home> {
       body: renderedWidget[currentPage],
       bottomNavigationBar:
         Theme(data: Theme.of(context).copyWith(
-          canvasColor:  Colors.blue[900],
+          canvasColor:  Colors.blue,
           textTheme: Theme.of(context).textTheme.copyWith(caption: TextStyle(color: Colors.white))
         ),
             child: BottomNavigationBar(

@@ -21,15 +21,12 @@ class _ViewQuiz extends State<ViewQuiz> {
     setState(() {
       this.user = _user.uid;
       getClasses();
-      //print(this.user);
     });
 
   }
 
   
   getClasses() async{
-  //  if(this.user != null) {
-    //setState(() {
        Firestore.instance.collection(this.user)
           .document('Classes').snapshots().listen((qs) {
         if (qs.exists) {
@@ -42,9 +39,6 @@ class _ViewQuiz extends State<ViewQuiz> {
           }
         }
       });
-    //});
-    //}
-    //print(this.classNames);
     
   }
   
@@ -66,11 +60,11 @@ class _ViewQuiz extends State<ViewQuiz> {
   @override
   Widget build(BuildContext context) =>
     Scaffold(
-      backgroundColor: Colors.blueGrey[400],
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text('Choose a Class',),
         centerTitle: true,
-        backgroundColor: Colors.blue[900],
+        backgroundColor: Colors.blue,
         actions: <Widget>[
           FlatButton(onPressed: _logOut, child: IconButton(color: Colors.white,icon: Icon(Icons.exit_to_app), onPressed: ()=> _logOut()),),
         ],
@@ -85,7 +79,6 @@ class _ViewQuiz extends State<ViewQuiz> {
                   child:Container(
                     width: MediaQuery.of(context).size.width,
                     child: RaisedButton(
-                      color: Colors.yellow[400],
                       onPressed: () {
                         Navigator.of(context).push(
                             new MaterialPageRoute(
@@ -156,7 +149,6 @@ getQuizzes() async{
     });
   });
 
-  //print(this.quizNames);
 }
 
 getColor(score, total){
@@ -183,11 +175,11 @@ void initState(){
 Widget build(BuildContext context) {
   print(this.quizNames);
   return Scaffold(
-    backgroundColor: Colors.blueGrey[400],
+    backgroundColor: Colors.white,
     appBar: AppBar(
       title: Text('Choose a Quiz',),
       centerTitle: true,
-      backgroundColor: Colors.blue[900],
+      backgroundColor: Colors.blue,
       actions: <Widget>[
         FlatButton(onPressed: _logOut, child: IconButton(color: Colors.white,icon: Icon(Icons.exit_to_app), onPressed: ()=> _logOut()),),
       ],
@@ -253,8 +245,6 @@ class _ViewQuestions extends State<ViewQuestions> {
             print('question: '+r.toString());
             questions.add(r);
             print('question: '+r.question);
-            //print(m[0]["question"].toString());
-            //index++;
           });
 
         }
@@ -289,11 +279,11 @@ class _ViewQuestions extends State<ViewQuestions> {
   Widget build(BuildContext context) =>
     //print(this.questions);
     Scaffold(
-      backgroundColor: Colors.blueGrey[400],
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(quizName,),
         centerTitle: true,
-        backgroundColor: Colors.blue[900],
+        backgroundColor: Colors.blue,
         actions: <Widget>[
           FlatButton(onPressed: _logOut, child: IconButton(color: Colors.white,icon: Icon(Icons.exit_to_app), onPressed: ()=> _logOut()),),
         ],
