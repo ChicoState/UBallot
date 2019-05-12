@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'Widgets/Question.dart';
+import 'Models/Question.dart';
 import 'dart:async';
 import 'takequiz.dart';
 import 'login.dart';

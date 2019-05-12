@@ -42,26 +42,20 @@ class _LoginPageState extends State<LoginPage>{
           FirebaseUser user =
           await FirebaseAuth.instance.signInWithEmailAndPassword(
               email: credentials.email, password: credentials.password);
-          //validateUser(credentials);
           assert(user != null);
           assert(await user.getIdToken() != null);
-          //   Navigator.push(context, MaterialPageRoute(builder: (context)=> new MyApp()));
           Navigator.push(context, MaterialPageRoute(
               builder: (context) => new UBallot()));
         } else {
           FirebaseUser user = await FirebaseAuth.instance.createUserWithEmailAndPassword(
               email: credentials.email, password: credentials.password);
-          //validateUser(credentials);
           assert(user != null);
           assert(await user.getIdToken() != null);
-          //   Navigator.push(context, MaterialPageRoute(builder: (context)=> new MyApp()));
           Navigator.push(context, MaterialPageRoute(
               builder: (context) => new UBallot()));
         }
       } catch(e){
         print(e.message);
-        //  return;
-        //FIX EXIT HERE LATER!! OR FAIL LOGIN
       }
     }
   }
@@ -97,7 +91,9 @@ class _LoginPageState extends State<LoginPage>{
 
     return new Scaffold(
       resizeToAvoidBottomPadding: false,
-        appBar: AppBar(title: Image.asset('assets/UBallots.png',scale: .4,),centerTitle: true,),
+        appBar: AppBar(
+          title: Image.asset('assets/UBallots.png',scale: .4,),
+          centerTitle: true,),
       body: new Container(
         width: screenSize.width,
         padding: new EdgeInsets.all(20.0),

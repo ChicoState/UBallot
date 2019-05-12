@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'Widgets/Question.dart';
+import 'Models/Question.dart';
 import 'login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -127,32 +127,27 @@ class _CreateQuiz extends State<CreateQuiz> {
   }
 
   saveToFirebase(int q_number){
-//    Firestore.instance.collection(this.nameOfQuiz).document(q_number.toString()).setData(quizQuestion.questionToJson());
-
-
-  Map<String,Map<String,Map<String,Map<String,String>>>> quiz={'quiz':{this.nameOfQuiz:{q_number.toString():quizQuestion.questionToJson()}}};
+  Map<String,Map<String,Map<String,Map<String,String>>>> quiz = {
+    'quiz':{this.nameOfQuiz:{q_number.toString():quizQuestion.questionToJson()}}
+  };
   Firestore.instance.collection('Quizzes').document('Class1').setData(quiz,merge: true);
-
-//    Firestore.instance.collection('Quizzes').document('Class1').setData(quizQuestion.questionToJson());
   }
-
 
   saveQuestion(){
     final formState=_formKey.currentState;
     if(formState.validate()){
       formState.save();
-     // quizQuestion.question=questions;
-    //  quizQuestion.A=a;
-    //  quizQuestion.B=b;
-    //  quizQuestion.C=c;
-     // quizQuestion.D=d;
-     // quizQuestion.E=e;
       quizQuestion.correctAnswer=valueToString[radioVal];
       print(quizQuestion.correctAnswer);
 
       saveToFirebase(questionNumber);
       setState(() {
-        A.clear();B.clear();QUESTION.clear();C.clear();D.clear();E.clear();FeedBack.clear();
+        A.clear();B.clear();
+        QUESTION.clear();
+        C.clear();
+        D.clear();
+        E.clear();
+        FeedBack.clear();
         radioVal=-1;
         questionNumber+=1;
         filled.fillRange(0, filled.length,false);
@@ -169,17 +164,23 @@ class _CreateQuiz extends State<CreateQuiz> {
 
   @override
   Widget build(BuildContext context) {
-//    radioVal=-
     setState(() {
       nameOfQuiz='${widget.titlequiz}';
     });
     return Scaffold(
       resizeToAvoidBottomPadding: false,
-      appBar: AppBar(title: Text(nameOfQuiz+" question# "+questionNumber.toString(),),
-        backgroundColor: Colors.blue,
+      appBar: AppBar(
+        title: Text(nameOfQuiz+" question# "+questionNumber.toString(),
+        ),
+        backgroundColor: Colors.white,
         actions: <Widget>[
-          FlatButton(onPressed: _logOut, child: IconButton(color: Colors.white,icon: Icon(Icons.exit_to_app), onPressed: ()=> _logOut()),),
-        ],),
+          FlatButton(onPressed: _logOut, child: IconButton(
+              color: Colors.white,
+              icon: Icon(Icons.exit_to_app),
+              onPressed: ()=> _logOut()),
+          ),
+        ],
+      ),
       backgroundColor: Colors.blueGrey[400],
       body: Container(
         width: MediaQuery.of(context).size.width,

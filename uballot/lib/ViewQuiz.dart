@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'Widgets/Response.dart';
+import 'Models/Response.dart';
 import 'login.dart';
 
 class ViewQuiz extends StatefulWidget{

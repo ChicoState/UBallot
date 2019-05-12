@@ -43,7 +43,6 @@ void main() {
     await tester.pumpAndSettle();
     verify(mockObserver.didPush(any, any));
     expect(find.byType(CreateQuiz), findsOneWidget);
-
   });
 
   /* createQuiz */
