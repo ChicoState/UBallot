@@ -170,9 +170,9 @@ class _CreateQuiz extends State<CreateQuiz> {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
-        title: Text(nameOfQuiz+" question# "+questionNumber.toString(),
+        title: Text(nameOfQuiz+": Question #"+questionNumber.toString(),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.blue,
         actions: <Widget>[
           FlatButton(onPressed: _logOut, child: IconButton(
               color: Colors.white,
@@ -181,7 +181,7 @@ class _CreateQuiz extends State<CreateQuiz> {
           ),
         ],
       ),
-      backgroundColor: Colors.blueGrey[400],
+      backgroundColor: Colors.white,
       body: Container(
         width: MediaQuery.of(context).size.width,
         padding: EdgeInsets.all(20.0),

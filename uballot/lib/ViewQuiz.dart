@@ -175,10 +175,7 @@ Widget build(BuildContext context) {
   print(this.quizNames);
   return Scaffold(
     backgroundColor: Colors.white,
-    appBar: AppBar(
-      title: Text('Choose a Quiz',),
-      centerTitle: true,
-      backgroundColor: Colors.blue,
+    appBar: AppBar(title: Image.asset('assets/UBallots.png',scale: .4,),centerTitle: true,
       actions: <Widget>[
         FlatButton(onPressed: _logOut, child: IconButton(color: Colors.white,icon: Icon(Icons.exit_to_app), onPressed: ()=> _logOut()),),
       ],

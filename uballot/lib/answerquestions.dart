@@ -48,10 +48,7 @@ class _ClassesFromFirebase extends State<ClassesFromFirebase> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Choose a Class",),
-        backgroundColor: Colors.blue,
-        centerTitle: true,
+      appBar: AppBar(title: Image.asset('assets/UBallots.png',scale: .4,),centerTitle: true,
         actions: <Widget>[
           FlatButton(onPressed: _logOut, child: IconButton(color: Colors.white,icon: Icon(Icons.exit_to_app), onPressed: ()=> _logOut()),),
         ],
@@ -158,10 +155,7 @@ class _QuizzesFromFirebase extends State<QuizzesFromFirebase> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-          appBar: AppBar(
-            title: Text("Choose a Quiz",),
-            centerTitle: true,
-            backgroundColor: Colors.blue,
+          appBar: AppBar(title: Image.asset('assets/UBallots.png',scale: .4,),centerTitle: true,
             actions: <Widget>[
               FlatButton(onPressed: _logOut, child: IconButton(color: Colors.white,icon: Icon(Icons.exit_to_app), onPressed: ()=> _logOut()),),
             ],
